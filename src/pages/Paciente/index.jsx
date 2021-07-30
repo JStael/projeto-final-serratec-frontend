@@ -1,13 +1,16 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
+import http from "../../services/http";
 import "./style.css";
 
 function Paciente() {
   const context = useContext(GlobalContext);
+  const history = useHistory();
+
   const { paciente } = context;
 
   const [readOnly, setReadOnly] = useState(true);
@@ -30,7 +33,7 @@ function Paciente() {
   };
 
   const cepHandle = (evento) => {
-    if (evento.target.value.length <= 8) setCep(evento.target.value);
+    if (evento.target.value.length <= 9) setCep(evento.target.value);
   };
 
   const obterCep = (evento) => {
@@ -62,18 +65,18 @@ function Paciente() {
       dataNascimento: dataNascimento,
       endereco: {
         cep: cep,
-        rua: rua,
+        logradouro: rua,
         numeroResidencia: numero,
         bairro: bairro,
-        cidade: cidade,
-        estado: estado,
+        localidade: cidade,
+        uf: estado,
       },
     };
 
-    axios
-      .put(`http://localhost:8080/api/pacientes/${id}`, paciente)
+    http
+      .put(`pacientes/${id}`, paciente)
       .then((response) => {
-        alert(`Cadastro do paciente ${nome} alterado com sucesso!`);
+        alert(`Cadastro do(a) paciente ${nome} alterado com sucesso!`);
       })
       .catch((erro) => {
         console.log("Hmmm.. Tem algo errado");
@@ -81,26 +84,43 @@ function Paciente() {
       });
   };
 
+  const deletarPaciente = () => {
+    http
+      .delete(`pacientes/${id}`)
+      .then((response) => {
+        alert(`Paciente ${nome} excluído com sucesso!`);
+        history.goBack();
+      })
+      .catch((erro) => console.error(erro));
+  };
+
   return (
     <>
       <Header />
       <MenuLateral />
       <div className="container p-0">
-        <form className="form-cadastro-paciente" onSubmit={editarCadastro}>
-          <div className="header-cadastro-paciente mb-3 bg-primary text-white">
+        <form className="form-consulta-paciente" onSubmit={editarCadastro}>
+          <div className="header-consulta-paciente mb-3 bg-primary text-white">
             <h5 className="mb-0">Consulta de paciente</h5>
-            <i
-              className="fas fa-edit text-white fs-3 icone-cadastro-paciente"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Editar cadastro"
-              onClick={() =>
-                readOnly ? setReadOnly(false) : setReadOnly(true)
-              }
-            ></i>
+            <div>
+              <i
+                className="fas fa-user-edit text-white mx-2 fs-5 icone-consulta-paciente"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Editar cadastro"
+                onClick={() =>
+                  readOnly ? setReadOnly(false) : setReadOnly(true)
+                }
+              ></i>
+              <i
+                className="fas fa-trash-alt mx-2 fs-5 icone-consulta-paciente"
+                data-bs-toggle="modal"
+                data-bs-target="#deletar"
+              ></i>
+            </div>
           </div>
           <div className=" d-flex flex-row flex-wrap justify-content-around">
-            <div className="corpo-cadastro-paciente1">
+            <div className="corpo-consulta-paciente1">
               <div>
                 <label className="mb-2">Nome</label>
                 <input
@@ -162,18 +182,17 @@ function Paciente() {
                 />
               </div>
             </div>
-            <div className="corpo-cadastro-paciente2">
+            <div className="corpo-consulta-paciente2">
               <div>
                 <label className="mb-2">Cep</label>
                 <input
                   readOnly={readOnly}
                   className="form-control py-1 px-4"
                   required
-                  type="number"
+                  type="text"
                   value={cep}
                   onBlur={obterCep}
                   onChange={cepHandle}
-                  placeholder="Apenas os 8 digitos"
                 />
               </div>
               <div>
@@ -233,14 +252,47 @@ function Paciente() {
                 />
               </div>
             </div>
-            <div className="botoes-cadastro-paciente">
+            <div className="botoes-consulta-paciente">
               {!readOnly && <button className="btn btn-primary">Salvar</button>}
               <Link to="/home" className="btn btn-outline-primary">
                 Gerar recibo
               </Link>
+              <button
+                className="btn btn-outline-primary"
+                onClick={() => history.goBack()}
+              >
+                Voltar
+              </button>
             </div>
           </div>
         </form>
+      </div>
+      <div className="modal fade" id="deletar" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header btn-primary">
+              <h5 className="modal-title">Excluir paciente</h5>
+            </div>
+            <p className="text-center mt-4">
+              Tem certeza que deseja excluir esse paciente?
+            </p>
+            <div className="modal-body modal-menu">
+              <button
+                onClick={deletarPaciente}
+                className="btn btn-danger btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Excluir
+              </button>
+              <button
+                className="btn btn-outline-primary btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

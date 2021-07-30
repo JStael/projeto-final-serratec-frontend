@@ -27,7 +27,7 @@ function CadastroPaciente() {
   };
 
   const cepHandle = (evento) => {
-    if (evento.target.value.length <= 8) setCep(evento.target.value);
+    if (evento.target.value.length <= 9) setCep(evento.target.value);
   };
 
   const obterCep = (evento) => {
@@ -60,7 +60,7 @@ function CadastroPaciente() {
         logradouro: rua,
         numero: numero,
         bairro: bairro,
-        cidade: cidade,
+        localidade: cidade,
         uf: estado,
       },
     };
@@ -68,7 +68,7 @@ function CadastroPaciente() {
     http
       .post("pacientes", paciente)
       .then((response) => {
-        alert(`Paciente ${nome} cadastrado com sucesso!`);
+        alert(`Paciente ${nome} cadastrado(a) com sucesso!`);
         setNome("");
         setEmail("");
         setCpf("");
@@ -160,11 +160,10 @@ function CadastroPaciente() {
                 <input
                   className="form-control py-1 px-4"
                   required
-                  type="number"
+                  type="text"
                   value={cep}
                   onBlur={obterCep}
                   onChange={cepHandle}
-                  placeholder="Apenas os 8 digitos"
                 />
               </div>
               <div>

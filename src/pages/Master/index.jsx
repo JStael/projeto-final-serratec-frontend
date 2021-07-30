@@ -1,5 +1,7 @@
 import { useState, useContext } from "react";
+import { useHistory } from "react-router";
 import axios from "axios";
+import http from "../../services/http";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
@@ -7,12 +9,15 @@ import "./style.css";
 
 function Master() {
   const context = useContext(GlobalContext);
+  const history = useHistory();
+
   const { master } = context;
 
   const [readOnly, setReadOnly] = useState(true);
 
   const id = master.id;
   const [nome, setNome] = useState(master.nome);
+  const [userName, setUserName] = useState(master.username);
   const [email, setEmail] = useState(master.email);
   const [cpf, setCpf] = useState(master.cpf);
   const [telefone, setTelefone] = useState(master.telefone);
@@ -29,7 +34,7 @@ function Master() {
   };
 
   const cepHandle = (evento) => {
-    if (evento.target.value.length <= 8) setCep(evento.target.value);
+    if (evento.target.value.length <= 9) setCep(evento.target.value);
   };
 
   const obterCep = (evento) => {
@@ -55,6 +60,7 @@ function Master() {
     const master = {
       id: id,
       nome: nome,
+      username: userName,
       email: email,
       cpf: cpf,
       telefone: telefone,
@@ -69,15 +75,25 @@ function Master() {
       },
     };
 
-    axios
-      .put(`http://localhost:8080/api/secretarias/${id}`, master)
+    http
+      .put(`usuarios/${id}`, master)
       .then((response) => {
-        alert(`Cadastro do paciente ${nome} alterado com sucesso!`);
+        alert(`Cadastro do usuário ${nome} alterado com sucesso!`);
       })
       .catch((erro) => {
         console.log("Hmmm.. Tem algo errado");
         console.log(erro);
       });
+  };
+
+  const deletarMaster = () => {
+    http
+      .delete(`usuarios/${id}`)
+      .then((response) => {
+        alert(`Usuário master ${nome} excluído com sucesso!`);
+        history.goBack();
+      })
+      .catch((erro) => console.error(erro));
   };
 
   return (
@@ -88,15 +104,22 @@ function Master() {
         <form className="form-consulta-master" onSubmit={editarCadastro}>
           <div className="header-consulta-master bg-primary text-white">
             <h5 className="mb-0">Consulta de usuário master</h5>
-            <i
-              className="fas fa-edit text-white fs-3 icone-consultar-master"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Editar cadastro"
-              onClick={() =>
-                readOnly ? setReadOnly(false) : setReadOnly(true)
-              }
-            ></i>
+            <div>
+              <i
+                className="fas fa-user-edit text-white mx-2 fs-5 icone-consulta-master"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Editar cadastro"
+                onClick={() =>
+                  readOnly ? setReadOnly(false) : setReadOnly(true)
+                }
+              ></i>
+              <i
+                className="fas fa-trash-alt mx-2 fs-5 icone-consulta-master"
+                data-bs-toggle="modal"
+                data-bs-target="#deletar"
+              ></i>
+            </div>
           </div>
           <div className=" d-flex flex-row flex-wrap p-4 mb-2 justify-content-around">
             <div className="corpo-consulta-master1">
@@ -110,6 +133,18 @@ function Master() {
                   value={nome}
                   onChange={(evento) => setNome(evento.target.value)}
                   placeholder="Digite o nome do usuário"
+                />
+              </div>
+              <div>
+                <label className="mb-2">Usuário</label>
+                <input
+                  readOnly={readOnly}
+                  className="form-control py-1 px-4"
+                  required
+                  type="text"
+                  value={userName}
+                  onChange={(evento) => setUserName(evento.target.value)}
+                  placeholder="Digite seu nome de usuário"
                 />
               </div>
               <div>
@@ -168,11 +203,10 @@ function Master() {
                   readOnly={readOnly}
                   className="form-control py-1 px-4"
                   required
-                  type="number"
+                  type="text"
                   value={cep}
                   onBlur={obterCep}
                   onChange={cepHandle}
-                  placeholder="Apenas os 8 digitos"
                 />
               </div>
               <div>
@@ -234,9 +268,42 @@ function Master() {
             </div>
             <div className="botoes-consulta-master">
               {!readOnly && <button className="btn btn-primary">Salvar</button>}
+              <button
+                className="btn btn-outline-primary"
+                onClick={() => history.goBack()}
+              >
+                Voltar
+              </button>
             </div>
           </div>
         </form>
+      </div>
+      <div className="modal fade" id="deletar" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header btn-primary">
+              <h5 className="modal-title">Excluir usuário master</h5>
+            </div>
+            <p className="text-center mt-4">
+              Tem certeza que deseja excluir esse usuário master?
+            </p>
+            <div className="modal-body modal-menu">
+              <button
+                onClick={deletarMaster}
+                className="btn btn-danger btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Excluir
+              </button>
+              <button
+                className="btn btn-outline-primary btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

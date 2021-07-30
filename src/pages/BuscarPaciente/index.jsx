@@ -56,7 +56,7 @@ function BuscarPaciente() {
           </div>
         </div>
         <hr />
-        <div className="resultado-pesquisa">
+        <div className="resultado-pesquisa py-4">
           <h6 className="titulo-resultado-pesquisa">{`Pacientes encontrados: ${pacientes.length}`}</h6>
             {pacienteNaoEncontrado}
           <ul>

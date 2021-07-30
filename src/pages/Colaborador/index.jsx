@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
@@ -9,6 +9,7 @@ import "./style.css";
 function Colaborador() {
   const context = useContext(GlobalContext);
   const { colaborador } = context;
+  const history = useHistory();
 
   const [readOnly, setReadOnly] = useState(true);
 
@@ -32,7 +33,7 @@ function Colaborador() {
   };
 
   const cepHandle = (evento) => {
-    if (evento.target.value.length <= 8) setCep(evento.target.value);
+    if (evento.target.value.length <= 9) setCep(evento.target.value);
   };
 
   const obterCep = (evento) => {
@@ -103,7 +104,7 @@ function Colaborador() {
           <div className="header-consultar-colaborador mb-3 bg-primary text-white">
             <h5 className="mb-0">Consulta de colaborador</h5>
             <i
-              className="fas fa-edit text-white fs-3 icone-cadastro-paciente"
+              className="fas fa-user-edit text-white fs-3 icone-cadastro-paciente"
               data-bs-toggle="tooltip"
               data-bs-placement="bottom"
               title="Editar cadastro"
@@ -182,11 +183,10 @@ function Colaborador() {
                   readOnly={readOnly}
                   className="form-control py-1 px-4"
                   required
-                  type="number"
+                  type="text"
                   value={cep}
                   onBlur={obterCep}
                   onChange={cepHandle}
-                  placeholder="Apenas os 8 digitos"
                 />
               </div>
               <div>
@@ -248,9 +248,12 @@ function Colaborador() {
             </div>
             <div className="botoes-cadastro-paciente">
               {!readOnly && <button className="btn btn-primary">Salvar</button>}
-              <Link to="/home" className="btn btn-outline-primary">
-                Gerar recibo
-              </Link>
+              <button
+                className="btn btn-outline-primary"
+                onClick={() => history.goBack()}
+              >
+                Voltar
+              </button>
             </div>
           </div>
         </form>

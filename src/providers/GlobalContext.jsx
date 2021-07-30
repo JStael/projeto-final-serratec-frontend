@@ -18,10 +18,11 @@ export const GlobalProvider = ({ children }) => {
   }, [])
 
   const logout = () => {
-    setUsuario("")
-    setAutenticado(false)
-    localStorage.removeItem("userName")
-    localStorage.removeItem("token")
+    setUsuario("");
+    setAutenticado(false);
+    localStorage.removeItem("userName");
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
   }
 
   return (

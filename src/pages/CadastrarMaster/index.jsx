@@ -28,7 +28,7 @@ function CadastroMaster() {
   };
 
   const cepHandle = (evento) => {
-    if (evento.target.value.length <= 8) setCep(evento.target.value);
+    if (evento.target.value.length <= 9) setCep(evento.target.value);
   };
 
   const obterCep = (evento) => {
@@ -63,10 +63,10 @@ function CadastroMaster() {
       dataNascimento: dataNascimento,
       endereco: {
         cep: cep,
-        rua: rua,
-        numeroResidencia: numero,
+        logradouro: rua,
+        numero: numero,
         bairro: bairro,
-        cidade: cidade,
+        localidade: cidade,
         estado: estado,
       },
     };
@@ -189,11 +189,10 @@ function CadastroMaster() {
                 <label className="mb-2">Cep</label>
                 <input
                   className="form-control py-1 px-4"
-                  type="number"
+                  type="text"
                   value={cep}
                   onBlur={obterCep}
                   onChange={cepHandle}
-                  placeholder="Apenas os 8 digitos"
                 />
               </div>
               <div>

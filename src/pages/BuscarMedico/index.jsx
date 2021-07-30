@@ -22,7 +22,6 @@ function BuscarMedico() {
       .then((response) => {
         setMedicos(response.data);
         setNome("");
-        console.log(medicos);
       })
       .catch((response) => {
         if (response.request.status === 404) setMedicoNaoEncontrado("Médico não encontrado.")
@@ -56,7 +55,7 @@ function BuscarMedico() {
           </div>
         </div>
         <hr />
-        <div className="resultado-pesquisa">
+        <div className="resultado-pesquisa py-4">
           <h6 className="titulo-resultado-pesquisa">{`Médicos encontrados: ${medicos.length}`}</h6>
             {medicoNaoEncontrado}
           <ul>

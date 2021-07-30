@@ -26,7 +26,7 @@ function BuscarProcedimento() {
         console.log(procedimentos);
       })
       .catch((response) => {
-        if (response.request.status === 404) setProcedimentoNaoEncontrado("Paciente não encontrado.")
+        if (response.request.status === 404) setProcedimentoNaoEncontrado("Procedimento não encontrado.")
       });
   };
 
@@ -57,7 +57,7 @@ function BuscarProcedimento() {
           </div>
         </div>
         <hr />
-        <div className="resultado-pesquisa">
+        <div className="resultado-pesquisa py-4">
           <h6 className="titulo-resultado-pesquisa">{`Procedimentos encontrados: ${procedimentos.length}`}</h6>
             {procedimentoNaoEncontrado}
           <ul>

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
+import http from "../../services/http";
 
 import "./style.css";
 
@@ -29,7 +30,7 @@ function CadastroMedico() {
   };
 
   const cepHandle = (evento) => {
-    if (evento.target.value.length <= 8) setCep(evento.target.value);
+    if (evento.target.value.length <= 9) setCep(evento.target.value);
   };
 
   const obterCep = (evento) => {
@@ -62,18 +63,17 @@ function CadastroMedico() {
       crm: crm,
       endereco: {
         cep: cep,
-        rua: rua,
-        numeroResidencia: numero,
+        logradouro: rua,
+        numero: numero,
         bairro: bairro,
-        cidade: cidade,
-        estado: estado,
+        localidade: cidade,
+        uf: estado,
       },
     };
 
-    axios
+    http
       .post("http://localhost:8080/api/medicos", usuario)
       .then((response) => {
-        //localStorage.setItem("token", response.data.access_token);
         alert(`Usuário ${nome} cadastrado com sucesso!`);
         setNome("");
         setEmail("");
@@ -202,11 +202,10 @@ function CadastroMedico() {
                 <input
                   className="form-control py-1 px-4"
                   required
-                  type="number"
+                  type="text"
                   value={cep}
                   onBlur={obterCep}
                   onChange={cepHandle}
-                  placeholder="Apenas os 8 digitos"
                 />
               </div>
               <div>

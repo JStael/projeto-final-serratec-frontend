@@ -22,7 +22,6 @@ function BuscarMaster() {
       .then((response) => {
         setUsuarios(response.data);
         setNome("");
-        console.log(response);
       })
       .catch((response) => {
         if (response.request.status === 404) setUsuarioNaoEncontrado("Usuário não encontrado.")
@@ -56,7 +55,7 @@ function BuscarMaster() {
           </div>
         </div>
         <hr />
-        <div className="resultado-pesquisa">
+        <div className="resultado-pesquisa py-4">
           <h6 className="titulo-resultado-pesquisa">{`Usuários encontrados: ${usuarios.length}`}</h6>
             {usuarioNaoEncontrado}
           <ul>

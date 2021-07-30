@@ -1,5 +1,7 @@
 import { useState, useContext } from "react";
 import axios from "axios";
+import http from "../../services/http";
+import { useHistory } from "react-router";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
@@ -7,6 +9,8 @@ import "./style.css";
 
 function Medico() {
   const context = useContext(GlobalContext);
+  const history = useHistory();
+
   const { medico } = context;
 
   const [readOnly, setReadOnly] = useState(true);
@@ -17,6 +21,7 @@ function Medico() {
   const [cpf, setCpf] = useState(medico.cpf);
   const [telefone, setTelefone] = useState(medico.telefone);
   const [dataNascimento, setDataNascimento] = useState(medico.dataNascimento);
+  const [crm, setCrm] = useState(medico.crm);
   const [cep, setCep] = useState(medico.endereco.cep);
   const [rua, setRua] = useState(medico.endereco.logradouro);
   const [numero, setNumero] = useState(medico.endereco.numero);
@@ -29,7 +34,7 @@ function Medico() {
   };
 
   const cepHandle = (evento) => {
-    if (evento.target.value.length <= 8) setCep(evento.target.value);
+    if (evento.target.value.length <= 9) setCep(evento.target.value);
   };
 
   const obterCep = (evento) => {
@@ -59,6 +64,7 @@ function Medico() {
       cpf: cpf,
       telefone: telefone,
       dataNascimento: dataNascimento,
+      crm: crm,
       endereco: {
         cep: cep,
         logradouro: rua,
@@ -69,15 +75,25 @@ function Medico() {
       },
     };
 
-    axios
-      .put(`http://localhost:8080/api/secretarias/${id}`, medico)
+    http
+      .put(`medicos/${id}`, medico)
       .then((response) => {
-        alert(`Cadastro do médico ${nome} alterado com sucesso!`);
+        alert(`Cadastro do(a) médico(a) ${nome} alterado com sucesso!`);
       })
       .catch((erro) => {
         console.log("Hmmm.. Tem algo errado");
         console.log(erro);
       });
+  };
+
+  const deletarMedico = () => {
+    http
+      .delete(`medicos/${id}`)
+      .then((response) => {
+        alert(`Médico(a) ${nome} excluído com sucesso!`);
+        history.goBack();
+      })
+      .catch((erro) => console.error(erro));
   };
 
   return (
@@ -87,16 +103,23 @@ function Medico() {
       <div className="container p-0">
         <form className="form-consulta-medico" onSubmit={editarCadastro}>
           <div className="header-consulta-medico bg-primary text-white">
-            <h5 className="mb-0">Consulta de usuário medico</h5>
-            <i
-              className="fas fa-edit text-white fs-3 icone-consultar-medico"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Editar cadastro"
-              onClick={() =>
-                readOnly ? setReadOnly(false) : setReadOnly(true)
-              }
-            ></i>
+            <h5 className="mb-0">Consulta de usuário médico</h5>
+            <div>
+              <i
+                className="fas fa-user-edit text-white mx-2 fs-5 icone-consulta-medico"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Editar cadastro"
+                onClick={() =>
+                  readOnly ? setReadOnly(false) : setReadOnly(true)
+                }
+              ></i>
+              <i
+                className="fas fa-trash-alt mx-2 fs-5 icone-consulta-medico"
+                data-bs-toggle="modal"
+                data-bs-target="#deletar"
+              ></i>
+            </div>
           </div>
           <div className=" d-flex flex-row flex-wrap p-4 mb-2 justify-content-around">
             <div className="corpo-consulta-medico1">
@@ -160,6 +183,18 @@ function Medico() {
                   placeholder="YYYY-MM-DD"
                 />
               </div>
+              <div>
+                <label className="mb-2">CRM</label>
+                <input
+                  readOnly={readOnly}
+                  className="form-control py-1 px-4"
+                  required
+                  type="text"
+                  value={crm}
+                  onChange={(evento) => setCrm(evento.target.value)}
+                  placeholder="0000000-0/BR"
+                />
+              </div>
             </div>
             <div className="corpo-consulta-medico2">
               <div>
@@ -168,11 +203,10 @@ function Medico() {
                   readOnly={readOnly}
                   className="form-control py-1 px-4"
                   required
-                  type="number"
+                  type="text"
                   value={cep}
                   onBlur={obterCep}
                   onChange={cepHandle}
-                  placeholder="Apenas os 8 digitos"
                 />
               </div>
               <div>
@@ -234,9 +268,42 @@ function Medico() {
             </div>
             <div className="botoes-consulta-medico">
               {!readOnly && <button className="btn btn-primary">Salvar</button>}
+              <button
+                className="btn btn-outline-primary"
+                onClick={() => history.goBack()}
+              >
+                Voltar
+              </button>
             </div>
           </div>
         </form>
+      </div>
+      <div className="modal fade" id="deletar" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header btn-primary">
+              <h5 className="modal-title">Excluir médico</h5>
+            </div>
+            <p className="text-center mt-4">
+              Tem certeza que deseja excluir esse médico?
+            </p>
+            <div className="modal-body modal-menu">
+              <button
+                onClick={deletarMedico}
+                className="btn btn-danger btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Excluir
+              </button>
+              <button
+                className="btn btn-outline-primary btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

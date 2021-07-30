@@ -1,8 +1,57 @@
-.header-cadastro-paciente {
+.form-consulta-paciente {
+  width: 80%;
+  min-width: 650px;
+  min-height: 450px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fcfcfc;
+  margin: 30px auto;
+  padding: 0;
+  border-radius: 5px;
+  -webkit-box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
+  -moz-box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
+  box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
 }
 
-.icone-cadastro-paciente {
+.header-consulta-paciente {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: aquamarine;
+  border-radius: 5px 5px 0 0;
+  padding: 1rem;
+}
+
+.corpo-consulta-paciente1 {
+  min-width: 400px;
+  margin: 0 1rem;
+}
+.corpo-consulta-paciente2 {
+  min-width: 400px;
+  margin: 0 1rem;
+}
+
+.botoes-consulta-paciente {
+  margin: 1rem 3rem;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}
+
+.botoes-consulta-paciente .btn {
+  width: 190px;
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 2rem;
+}
+
+.icone-consulta-paciente {
   cursor: pointer;
 }

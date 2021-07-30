@@ -56,7 +56,7 @@ function BuscarColaborador() {
           </div>
         </div>
         <hr />
-        <div className="resultado-pesquisa">
+        <div className="resultado-pesquisa py-4">
           <h6 className="titulo-resultado-pesquisa">{`Colaboradores encontrados: ${colaboradores.length}`}</h6>
             {colaboradorNaoEncontrado}
           <ul>

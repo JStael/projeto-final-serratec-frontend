@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useHistory } from "react-router";
 import http from "../../services/http";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
@@ -8,6 +9,8 @@ import "./style.css";
 function Procedimento() {
   const context = useContext(GlobalContext);
   const { procedimento } = context;
+
+  const history = useHistory();
 
   const [readOnly, setReadOnly] = useState(true);
 
@@ -37,6 +40,16 @@ function Procedimento() {
       });
   };
 
+  const deletarProcedimento = () => {
+    http
+      .delete(`procedimentos/${id}`)
+      .then((response) => {
+        alert(`Procedimento ${nome} excluído com sucesso!`);
+        history.goBack();
+      })
+      .catch((erro) => console.error(erro));
+  };
+
   return (
     <>
       <Header />
@@ -45,15 +58,22 @@ function Procedimento() {
         <form className="form-consulta-procedimento" onSubmit={editarCadastro}>
           <div className="header-consulta-procedimento mb-3 bg-primary text-white">
             <h5 className="mb-0">Consulta de procedimento</h5>
-            <i
-              className="fas fa-edit text-white fs-3 icone-consulta-procedimento"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Editar consulta"
-              onClick={() =>
-                readOnly ? setReadOnly(false) : setReadOnly(true)
-              }
-            ></i>
+            <div>
+              <i
+                className="fas fa-edit text-white mx-2 fs-5 icone-consulta-procedimento"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Editar consulta"
+                onClick={() =>
+                  readOnly ? setReadOnly(false) : setReadOnly(true)
+                }
+              ></i>
+              <i
+                className="fas fa-trash-alt mx-2 fs-5 icone-consulta-procedimento"
+                data-bs-toggle="modal"
+                data-bs-target="#deletar"
+              ></i>
+            </div>
           </div>
           <div className=" d-flex flex-row flex-wrap justify-content-around">
             <div className="corpo-consulta-procedimento">
@@ -95,9 +115,40 @@ function Procedimento() {
             </div>
             <div className="botoes-consulta-procedimento">
               {!readOnly && <button className="btn btn-primary">Salvar</button>}
+              <button
+                className="btn btn-outline-primary"
+                onClick={() => history.goBack()}
+              >Voltar</button>
             </div>
           </div>
         </form>
+      </div>
+      <div className="modal fade" id="deletar" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header btn-primary">
+              <h5 className="modal-title">Excluir procedimento</h5>
+            </div>
+            <p className="text-center mt-4">
+              Tem certeza que deseja excluir esse procedimento?
+            </p>
+            <div className="modal-body modal-menu">
+              <button
+                onClick={deletarProcedimento}
+                className="btn btn-danger btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Excluir
+              </button>
+              <button
+                className="btn btn-outline-primary btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
