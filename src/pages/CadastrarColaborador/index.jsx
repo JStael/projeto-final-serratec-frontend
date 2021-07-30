@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
+
 import axios from "axios";
 
 import "./style.css";
 
 function CadastroColaborador() {
-
   const history = useHistory();
 
   const [nome, setNome] = useState("");
@@ -93,7 +95,10 @@ function CadastroColaborador() {
   };
 
   return (
-    <div className="container py-1">
+    <>
+      <Header />
+      <MenuLateral />
+      <div className="container py-1">
         <form className="form-cadastro-colaborador" onSubmit={efetuarCadastro}>
           <div className="header-cadastro-colaborador mb-3 bg-primary text-white">
             <h5 className="mb-0">Cadastro de colaborador</h5>
@@ -193,7 +198,6 @@ function CadastroColaborador() {
                 <label className="mb-2">Rua</label>
                 <input
                   className="form-control py-1 px-4"
-                  
                   type="text"
                   value={rua}
                   onChange={(evento) => setRua(evento.target.value)}
@@ -203,7 +207,6 @@ function CadastroColaborador() {
                 <label className="mb-2">Numero Residência</label>
                 <input
                   className="form-control py-1 px-4"
-                  
                   type="number"
                   value={numero}
                   onChange={(evento) => setNumero(evento.target.value)}
@@ -214,7 +217,6 @@ function CadastroColaborador() {
                 <label className="mb-2">Bairro</label>
                 <input
                   className="form-control py-1 px-4"
-                  
                   type="text"
                   value={bairro}
                   onChange={(evento) => setBairro(evento.target.value)}
@@ -224,7 +226,6 @@ function CadastroColaborador() {
                 <label className="mb-2">Cidade</label>
                 <input
                   className="form-control py-1 px-4"
-                  
                   type="text"
                   value={cidade}
                   onChange={(evento) => setCidade(evento.target.value)}
@@ -234,7 +235,6 @@ function CadastroColaborador() {
                 <label className="mb-2">Estado</label>
                 <input
                   className="form-control py-1 px-4"
-                  
                   type="text"
                   value={estado}
                   onChange={(evento) => setEstado(evento.target.value)}
@@ -243,11 +243,17 @@ function CadastroColaborador() {
             </div>
             <div className="botoes-cadastro-colaborador mb-5">
               <button className="btn btn-primary">Cadastrar</button>
-              <button className="btn btn-danger btn-cadastro-colaborador" onClick={() => history.goBack()}>Cancelar</button>
+              <button
+                className="btn btn-danger btn-cadastro-colaborador"
+                onClick={() => history.goBack()}
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </form>
-    </div>
+      </div>
+    </>
   );
 }
 

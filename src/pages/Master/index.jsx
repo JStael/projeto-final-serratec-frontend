@@ -1,7 +1,9 @@
 import { useState, useContext } from "react";
 import axios from "axios";
+import { GlobalContext } from "../../providers/GlobalContext";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
-import { GlobalContext } from "../../providers/Context";
 
 function Master() {
   const context = useContext(GlobalContext);
@@ -80,6 +82,8 @@ function Master() {
 
   return (
     <>
+      <Header />
+      <MenuLateral />
       <div className="container p-0">
         <form className="form-consulta-master" onSubmit={editarCadastro}>
           <div className="header-consulta-master bg-primary text-white">
@@ -89,7 +93,9 @@ function Master() {
               data-bs-toggle="tooltip"
               data-bs-placement="bottom"
               title="Editar cadastro"
-              onClick={() => readOnly ? setReadOnly(false) : setReadOnly(true)}
+              onClick={() =>
+                readOnly ? setReadOnly(false) : setReadOnly(true)
+              }
             ></i>
           </div>
           <div className=" d-flex flex-row flex-wrap p-4 mb-2 justify-content-around">

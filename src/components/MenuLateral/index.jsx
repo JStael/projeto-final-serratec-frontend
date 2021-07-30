@@ -40,7 +40,7 @@ function MenuLateral() {
             </span>
             <span className="texto-menu">USUÁRIOS</span>
           </li>
-          <li>
+          <li onClick={() => history.push("/configuracoes")}> 
             <span className="icones">
               <i className="fas fa-cogs fs-4 text-white"></i>
             </span>

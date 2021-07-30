@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { GlobalContext } from "../../providers/GlobalContext";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
-import { GlobalContext } from "../../providers/Context";
 
 function Paciente() {
   const context = useContext(GlobalContext);
@@ -81,6 +83,8 @@ function Paciente() {
 
   return (
     <>
+      <Header />
+      <MenuLateral />
       <div className="container p-0">
         <form className="form-cadastro-paciente" onSubmit={editarCadastro}>
           <div className="header-cadastro-paciente mb-3 bg-primary text-white">
@@ -90,7 +94,9 @@ function Paciente() {
               data-bs-toggle="tooltip"
               data-bs-placement="bottom"
               title="Editar cadastro"
-              onClick={() => readOnly ? setReadOnly(false) : setReadOnly(true)}
+              onClick={() =>
+                readOnly ? setReadOnly(false) : setReadOnly(true)
+              }
             ></i>
           </div>
           <div className=" d-flex flex-row flex-wrap justify-content-around">

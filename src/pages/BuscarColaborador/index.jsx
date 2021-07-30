@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../../providers/Context";
+import { GlobalContext } from "../../providers/GlobalContext";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
 
 function BuscarColaborador() {
@@ -29,6 +31,8 @@ function BuscarColaborador() {
 
   return (
     <div>
+      <Header />
+      <MenuLateral />
       <form className="form-consultar-colaborador" onSubmit={pesquisarColaborador}>
         <div className="header-consultar-colaborador mb-3 bg-primary text-white">
           <h5 className="mb-0">Consulta de colaboradores</h5>

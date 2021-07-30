@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 
 export const GlobalContext = createContext({});
 
@@ -9,6 +8,21 @@ export const GlobalProvider = ({ children }) => {
   const [master, setMaster] = useState({});
   const [medico, setMedico] = useState({});
   const [procedimento, setProcedimento] = useState({});
+
+  const [autenticado, setAutenticado] = useState(false);
+  const [usuario, setUsuario] = useState("")
+
+  useEffect(() => {
+    setAutenticado(localStorage.getItem("token"));
+    setUsuario(localStorage.getItem("userName"));
+  }, [])
+
+  const logout = () => {
+    setUsuario("")
+    setAutenticado(false)
+    localStorage.removeItem("userName")
+    localStorage.removeItem("token")
+  }
 
   return (
     <GlobalContext.Provider
@@ -22,10 +36,15 @@ export const GlobalProvider = ({ children }) => {
         medico,
         setMedico,
         procedimento,
-        setProcedimento
+        setProcedimento,
+        autenticado,
+        usuario,
+        logout
       }}
     >
       {children}
     </GlobalContext.Provider>
   );
 };
+
+

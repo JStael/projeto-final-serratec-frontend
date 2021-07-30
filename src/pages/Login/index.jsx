@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState} from "react";
 import { useHistory } from "react-router-dom";
 import MensagemErro from "./MensagemErro";
 import logo from '../../assets/images/logoLogin.png';
@@ -7,6 +7,7 @@ import http from "../../services/http";
 import "./style.css";
 
 function Login() {
+
   const [username, setUsername] = useState("");
   const [senha, setSenha] = useState("");
   const [mensagem, setMensagem] = useState("");
@@ -23,8 +24,8 @@ function Login() {
         senha: senha
     }
 
-    http.post('login', usuario)
-        .then((response) => {
+     http.post('login', usuario)
+      .then((response) => {
             const { token, usuario } = response.data
             localStorage.setItem("id", usuario.id);
             localStorage.setItem("token", token);

@@ -1,7 +1,9 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../../providers/Context";
+import { GlobalContext } from "../../providers/GlobalContext";
 import http from "../../services/http";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
 
 function BuscarProcedimento() {
@@ -30,6 +32,8 @@ function BuscarProcedimento() {
 
   return (
     <div>
+      <Header />
+      <MenuLateral />
       <form className="form-consultar-procedimento" onSubmit={pesquisarProcedimento}>
         <div className="header-consultar-procedimento mb-3 bg-primary text-white">
           <h5 className="mb-0">Buscar procedimento</h5>

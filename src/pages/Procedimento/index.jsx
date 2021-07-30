@@ -1,7 +1,9 @@
 import { useState, useContext } from "react";
 import http from "../../services/http";
+import { GlobalContext } from "../../providers/GlobalContext";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
-import { GlobalContext } from "../../providers/Context";
 
 function Procedimento() {
   const context = useContext(GlobalContext);
@@ -13,7 +15,6 @@ function Procedimento() {
   const [nome, setNome] = useState(procedimento.nomeProcedimento);
   const [descricao, setDescricao] = useState(procedimento.descricao);
   const [honorario, setHonorario] = useState(procedimento.valor);
-
 
   const editarCadastro = (evento) => {
     evento.preventDefault();
@@ -38,6 +39,8 @@ function Procedimento() {
 
   return (
     <>
+      <Header />
+      <MenuLateral />
       <div className="container p-0">
         <form className="form-consulta-procedimento" onSubmit={editarCadastro}>
           <div className="header-consulta-procedimento mb-3 bg-primary text-white">
@@ -47,7 +50,9 @@ function Procedimento() {
               data-bs-toggle="tooltip"
               data-bs-placement="bottom"
               title="Editar consulta"
-              onClick={() => readOnly ? setReadOnly(false) : setReadOnly(true)}
+              onClick={() =>
+                readOnly ? setReadOnly(false) : setReadOnly(true)
+              }
             ></i>
           </div>
           <div className=" d-flex flex-row flex-wrap justify-content-around">

@@ -1,0 +1,90 @@
+.form-editar-empresa {
+  width: 80%;
+  min-width: 650px;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fcfcfc;
+  margin: 30px auto;
+  padding: 0;
+  border-radius: 5px;
+  -webkit-box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
+  -moz-box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
+  box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
+}
+
+.corpo-editar-empresa1 {
+  min-width: 400px;
+  margin: 0 1rem;
+}
+.corpo-editar-empresa2 {
+  min-width: 400px;
+  margin: 0 1rem;
+}
+
+.header-editar-empresa {
+  width: 100%;
+  background-color: aquamarine;
+  border-radius: 5px 5px 0 0;
+  padding: 1rem;
+}
+
+
+
+.botoes-editar-empresa .btn {
+  width: 190px;
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 2rem;
+}
+
+
+.botoes-editar-empresa-color .btn {
+  width: 190px;
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 2rem;
+
+ flex-direction: column;
+ align-items: center;
+ align-self: center;
+
+  
+  
+}
+
+.avatari {
+  border-style: dotted;
+}
+
+.Jesus {
+display:flex; 
+border-radius: 20px;
+align-self: center;
+flex-direction: row;
+margin-left: 50px;
+justify-content: center;
+
+}
+
+
+
+.to-perdido {
+  width: 200px;
+  height: 200px;
+ 
+  align-self: flex-end;
+
+}
+
+.Meachei {
+  align-items: center;
+
+  border-radius: 0%;
+  
+}

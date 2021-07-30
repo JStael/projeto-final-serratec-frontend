@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { GlobalContext } from "../../providers/GlobalContext";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
-import { GlobalContext } from "../../providers/Context";
 
 function Colaborador() {
   const context = useContext(GlobalContext);
@@ -15,7 +17,9 @@ function Colaborador() {
   const [email, setEmail] = useState(colaborador.email);
   const [cpf, setCpf] = useState(colaborador.cpf);
   const [telefone, setTelefone] = useState(colaborador.telefone);
-  const [dataNascimento, setDataNascimento] = useState(colaborador.dataNascimento);
+  const [dataNascimento, setDataNascimento] = useState(
+    colaborador.dataNascimento
+  );
   const [cep, setCep] = useState("");
   const [rua, setRua] = useState("");
   const [numero, setNumero] = useState("");
@@ -92,6 +96,8 @@ function Colaborador() {
 
   return (
     <>
+      <Header />
+      <MenuLateral />
       <div className="container p-0">
         <form className="form-consultar-paciente" onSubmit={editarCadastro}>
           <div className="header-consultar-colaborador mb-3 bg-primary text-white">
@@ -101,7 +107,9 @@ function Colaborador() {
               data-bs-toggle="tooltip"
               data-bs-placement="bottom"
               title="Editar cadastro"
-              onClick={() => readOnly ? setReadOnly(false) : setReadOnly(true)}
+              onClick={() =>
+                readOnly ? setReadOnly(false) : setReadOnly(true)
+              }
             ></i>
           </div>
           <div className=" d-flex flex-row flex-wrap justify-content-around">

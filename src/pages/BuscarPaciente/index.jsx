@@ -1,7 +1,9 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../../providers/Context";
+import { GlobalContext } from "../../providers/GlobalContext";
 import http from "../../services/http";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
 
 function BuscarPaciente() {
@@ -29,6 +31,8 @@ function BuscarPaciente() {
 
   return (
     <div>
+      <Header />
+      <MenuLateral />
       <form className="form-consultar-paciente" onSubmit={pesquisarPaciente}>
         <div className="header-consultar-paciente mb-3 bg-primary text-white">
           <h5 className="mb-0">Buscar paciente</h5>

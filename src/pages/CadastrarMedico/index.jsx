@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
 
 import "./style.css";
 
 function CadastroMedico() {
-
   const history = useHistory();
 
   const [nome, setNome] = useState("");
@@ -96,7 +97,10 @@ function CadastroMedico() {
   };
 
   return (
-    <div className="container py-1">
+    <>
+      <Header />
+      <MenuLateral />
+      <div className="container py-1">
         <form className="form-cadastro-medico" onSubmit={efetuarCadastro}>
           <div className="header-cadastro-medico mb-3 bg-primary text-white">
             <h5 className="mb-0">Cadastro de médico</h5>
@@ -259,11 +263,17 @@ function CadastroMedico() {
             </div>
             <div className="botoes-cadastro-medico">
               <button className="btn btn-primary">Cadastrar</button>
-              <button className="btn btn-danger" onClick={() => history.goBack()}>Cancelar</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => history.goBack()}
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </form>
-    </div>
+      </div>
+    </>
   );
 }
 
