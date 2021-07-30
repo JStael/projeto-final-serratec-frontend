@@ -66,7 +66,7 @@ function Paciente() {
       endereco: {
         cep: cep,
         logradouro: rua,
-        numeroResidencia: numero,
+        numero: numero,
         bairro: bairro,
         localidade: cidade,
         uf: estado,

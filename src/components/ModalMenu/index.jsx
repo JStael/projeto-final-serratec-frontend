@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 import "./style.css";
 
-function ModalMenu({ id, titulo, rotaCadastrar, rotaConsultar }) {
+function ModalMenu({ id, titulo, rotaCadastrar, rotaConsultar, tituloBtn1, tituloBtn2 }) {
   const history = useHistory();
 
   return (
@@ -17,14 +17,14 @@ function ModalMenu({ id, titulo, rotaCadastrar, rotaConsultar }) {
               className="btn btn-primary btn-card-home fs-6"
               data-bs-dismiss="modal"
             >
-              Cadastrar
+              {tituloBtn1}
             </button>
             <button
               onClick={() => history.push(`/${rotaConsultar}`)}
               className="btn btn-primary btn-card-home fs-6"
               data-bs-dismiss="modal"
             >
-              Consultar
+              {tituloBtn2}
             </button>
           </div>
         </div>

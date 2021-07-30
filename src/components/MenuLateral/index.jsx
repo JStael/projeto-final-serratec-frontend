@@ -40,7 +40,10 @@ function MenuLateral() {
             </span>
             <span className="texto-menu">USUÁRIOS</span>
           </li>
-          <li onClick={() => history.push("/configuracoes")}> 
+          <li
+            data-bs-toggle="modal"
+            data-bs-target="#configuracoes"
+          >
             <span className="icones">
               <i className="fas fa-cogs fs-4 text-white"></i>
             </span>
@@ -57,18 +60,35 @@ function MenuLateral() {
         titulo="Pacientes"
         rotaCadastrar="cadastrar-paciente"
         rotaConsultar="buscar-paciente"
+        tituloBtn1="Cadastrar"
+        tituloBtn2="Consultar"
       />
+      {/* MODAL PROCEDIMENTOS */}
       <ModalMenu
         id="procedimentos"
         titulo="Procedimentos"
         rotaCadastrar="cadastrar-procedimento"
         rotaConsultar="buscar-procedimento"
+        tituloBtn1="Cadastrar"
+        tituloBtn2="Consultar"
       />
+      {/* MODAL USUÁRIOS */}
       <ModalMenu
         id="usuarios"
         titulo="Usuários"
         rotaCadastrar="cadastrar-usuario"
         rotaConsultar="buscar-usuario"
+        tituloBtn1="Cadastrar"
+        tituloBtn2="Consultar"
+      />
+      {/* MODAL CONFIGURAÇÕES */}
+      <ModalMenu
+        id="configuracoes"
+        titulo="Configurações"
+        rotaCadastrar="configuracoes/empresa"
+        rotaConsultar="configuracoes/sistema"
+        tituloBtn1="Empresa"
+        tituloBtn2="Sistema"
       />
     </>
   );

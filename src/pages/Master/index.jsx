@@ -67,11 +67,11 @@ function Master() {
       dataNascimento: dataNascimento,
       endereco: {
         cep: cep,
-        rua: rua,
-        numeroResidencia: numero,
+        logradouro: rua,
+        numero: numero,
         bairro: bairro,
-        cidade: cidade,
-        estado: estado,
+        localidade: cidade,
+        uf: estado,
       },
     };
 

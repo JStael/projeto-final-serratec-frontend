@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import http from "../../services/http";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
 
@@ -71,10 +72,9 @@ function CadastroMaster() {
       },
     };
 
-    axios
-      .post("http://localhost:8080/api/usuarios", usuario)
+    http
+      .post("usuarios", usuario)
       .then((response) => {
-        //localStorage.setItem("token", response.data.access_token);
         alert(`Usuário ${nome} cadastrado com sucesso!`);
         setNome("");
         setEmail("");

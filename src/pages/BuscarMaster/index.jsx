@@ -1,10 +1,10 @@
-import axios from "axios";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
+import http from "../../services/http";
 
 function BuscarMaster() {
   const context = useContext(GlobalContext);
@@ -17,8 +17,9 @@ function BuscarMaster() {
     ev.preventDefault();
     setUsuarioNaoEncontrado("");
     setUsuarios([]);
-    axios
-      .get(`http://localhost:8080/api/usuarios/nome/${nome}`)
+    
+    http
+      .get(`usuarios/nome/${nome}`)
       .then((response) => {
         setUsuarios(response.data);
         setNome("");
@@ -34,7 +35,7 @@ function BuscarMaster() {
       <MenuLateral />
       <form className="form-consultar-master" onSubmit={pesquisarMaster}>
         <div className="header-consultar-master mb-3 bg-primary text-white">
-          <h5 className="mb-0">Consulta de usuario master</h5>
+          <h5 className="mb-0">Buscar usuario master</h5>
         </div>
         <div className="d-flex flex-row flex-wrap justify-content-between">
           <div className="corpo-consultar-master">
@@ -46,7 +47,7 @@ function BuscarMaster() {
                 type="text"
                 value={nome}
                 onChange={(evento) => setNome(evento.target.value)}
-                placeholder="Digite o nome completo do usuário"
+                placeholder="Digite o nome do usuário master"
               />
             </div>
             <button className="btn btn-primary botao-consultar-master">

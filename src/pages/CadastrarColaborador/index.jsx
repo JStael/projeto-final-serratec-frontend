@@ -71,7 +71,7 @@ function CadastroColaborador() {
     };
 
     http
-      .post("http://localhost:8080/api/secretarias", usuario)
+      .post("secretarias", usuario)
       .then((response) => {
         alert(`Colaborador(a) ${nome} cadastrado(a) com sucesso!`);
         setNome("");

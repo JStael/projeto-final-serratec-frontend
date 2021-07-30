@@ -21,7 +21,7 @@ function CadastroProcedimento() {
       valor: honorario,
     };
     http
-      .post("procedimentos/", procedimento)
+      .post("procedimentos", procedimento)
       .then((response) => {
         alert(`Procedimento ${tipoProcedimento} cadastrado com sucesso!`);
         setProcedimento("");

@@ -21,14 +21,15 @@ import Medico from "./pages/Medico";
 import BuscarProcedimento from "./pages/BuscarProcedimento";
 import Procedimento from "./pages/Procedimento";
 import PrivateRoute from "./PrivateRoute";
-import Configuracoes from "./pages/Configuracoes";
+import ConfiguracaoEmpresa from "./pages/ConfiguracaoEmpresa";
+import ConfiguracaoSistema from "./pages/ConfiguracaoSistema";
 
 export function Routes() {
   return (
     <GlobalProvider>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Login} />     
+          <Route exact path="/" component={Login} />
           <PrivateRoute exact path="/home" component={Home} />
           <PrivateRoute
             exact
@@ -99,7 +100,14 @@ export function Routes() {
             path="/buscar-procedimento/procedimento"
             component={Procedimento}
           />
-          <PrivateRoute path="/configuracoes" component={Configuracoes} />
+          <PrivateRoute
+            path="/configuracoes/empresa"
+            component={ConfiguracaoEmpresa}
+          />
+          <PrivateRoute
+            path="/configuracoes/sistema"
+            component={ConfiguracaoSistema}
+          />
           <PrivateRoute component={PaginaErro} />
         </Switch>
       </BrowserRouter>

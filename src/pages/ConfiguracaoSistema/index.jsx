@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-import Avatar from "react-avatar-edit";
+//import Avatar from "react-avatar-edit";
 
-function Configuração2() {
+function ConfiguracaoSistema() {
   return (
     <div className="container p-0">
       <form className="form-editar-empresa">
@@ -63,14 +63,14 @@ function Configuração2() {
     }
     return (
       <div className="avatari">
-        <Avatar
+        {/* <Avatar
           width={600}
           height={300}
           onCrop={onCrop}
           onClose={onClose}
           onBeforeFileLoad={onBeforeFileLoad}
           src={null}
-        />
+        /> */}
         <br />
         {preview && (
           <>
@@ -84,4 +84,4 @@ function Configuração2() {
     );
   }
 }
-export default Configuração2;
+export default ConfiguracaoSistema;

@@ -17,6 +17,7 @@ function BuscarPaciente() {
     ev.preventDefault();
     setPacienteNaoEncontrado("");
     setPacientes([]);
+    
     http
       .get(`pacientes/nome/${nome}`)
       .then((response) => {
@@ -47,7 +48,7 @@ function BuscarPaciente() {
                 type="text"
                 value={nome}
                 onChange={(evento) => setNome(evento.target.value)}
-                placeholder="Digite o nome completo do paciente"
+                placeholder="Digite o nome do paciente"
               />
             </div>
             <button className="btn btn-primary botao-consultar-paciente">

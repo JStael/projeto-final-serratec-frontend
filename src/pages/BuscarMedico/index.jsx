@@ -1,4 +1,4 @@
-import axios from "axios";
+import http from "../../services/http";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../providers/GlobalContext";
@@ -17,8 +17,8 @@ function BuscarMedico() {
     ev.preventDefault();
     setMedicoNaoEncontrado("");
     setMedicos([]);
-    axios
-      .get(`http://localhost:8080/api/medicos/nome/${nome}`)
+    http
+      .get(`medicos/nome/${nome}`)
       .then((response) => {
         setMedicos(response.data);
         setNome("");
@@ -34,7 +34,7 @@ function BuscarMedico() {
       <MenuLateral />
       <form className="form-consultar-medico" onSubmit={pesquisarMedico}>
         <div className="header-consultar-medico mb-3 bg-primary text-white">
-          <h5 className="mb-0">Consulta de medico</h5>
+          <h5 className="mb-0">Buscar médico</h5>
         </div>
         <div className="d-flex flex-row flex-wrap justify-content-between">
           <div className="corpo-consultar-medico">
@@ -46,7 +46,7 @@ function BuscarMedico() {
                 type="text"
                 value={nome}
                 onChange={(evento) => setNome(evento.target.value)}
-                placeholder="Digite o nome completo do medico"
+                placeholder="Digite o nome do médico"
               />
             </div>
             <button className="btn btn-primary botao-consultar-medico">

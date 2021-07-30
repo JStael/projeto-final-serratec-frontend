@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import http from "../../services/http";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
@@ -15,6 +16,7 @@ function Colaborador() {
 
   const id = colaborador.id;
   const [nome, setNome] = useState(colaborador.nome);
+  const [userName, setUserName] = useState(colaborador.username);
   const [email, setEmail] = useState(colaborador.email);
   const [cpf, setCpf] = useState(colaborador.cpf);
   const [telefone, setTelefone] = useState(colaborador.telefone);
@@ -65,16 +67,16 @@ function Colaborador() {
       dataNascimento: dataNascimento,
       endereco: {
         cep: cep,
-        rua: rua,
-        numeroResidencia: numero,
+        logradouro: rua,
+        numero: numero,
         bairro: bairro,
-        cidade: cidade,
-        estado: estado,
+        localidade: cidade,
+        uf: estado
       },
     };
 
-    axios
-      .put(`http://localhost:8080/api/secretarias/${id}`, colaborador)
+    http
+      .put(`secretarias/${id}`, colaborador)
       .then((response) => {
         alert(`Cadastro do paciente ${nome} alterado com sucesso!`);
         setNome("");
@@ -95,23 +97,40 @@ function Colaborador() {
       });
   };
 
+  const deletarColaborador = () => {
+    http
+      .delete(`usuarios/${id}`)
+      .then((response) => {
+        alert(`Usuário master ${nome} excluído com sucesso!`);
+        history.goBack();
+      })
+      .catch((erro) => console.error(erro));
+  };
+
   return (
     <>
       <Header />
       <MenuLateral />
       <div className="container p-0">
-        <form className="form-consultar-paciente" onSubmit={editarCadastro}>
-          <div className="header-consultar-colaborador mb-3 bg-primary text-white">
+        <form className="form-consulta-colaborador" onSubmit={editarCadastro}>
+          <div className="header-consulta-colaborador mb-3 bg-primary text-white">
             <h5 className="mb-0">Consulta de colaborador</h5>
-            <i
-              className="fas fa-user-edit text-white fs-3 icone-cadastro-paciente"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Editar cadastro"
-              onClick={() =>
-                readOnly ? setReadOnly(false) : setReadOnly(true)
-              }
-            ></i>
+            <div>
+              <i
+                className="fas fa-user-edit text-white mx-2 fs-5 icone-consulta-colaborador"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="Editar cadastro"
+                onClick={() =>
+                  readOnly ? setReadOnly(false) : setReadOnly(true)
+                }
+              ></i>
+              <i
+                className="fas fa-trash-alt mx-2 fs-5 icone-consulta-master"
+                data-bs-toggle="modal"
+                data-bs-target="#deletar"
+              ></i>
+            </div>
           </div>
           <div className=" d-flex flex-row flex-wrap justify-content-around">
             <div className="corpo-cadastro-paciente1">
@@ -125,6 +144,18 @@ function Colaborador() {
                   value={nome}
                   onChange={(evento) => setNome(evento.target.value)}
                   placeholder="Digite o nome completo do paciente"
+                />
+              </div>
+              <div>
+                <label className="mb-2">Usuário</label>
+                <input
+                  readOnly={readOnly}
+                  className="form-control py-1 px-4"
+                  required
+                  type="text"
+                  value={userName}
+                  onChange={(evento) => setUserName(evento.target.value)}
+                  placeholder="Digite seu nome de usuário"
                 />
               </div>
               <div>
@@ -257,6 +288,33 @@ function Colaborador() {
             </div>
           </div>
         </form>
+      </div>
+      <div className="modal fade" id="deletar" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content ">
+            <div className="modal-header btn-primary">
+              <h5 className="modal-title">Excluir colaborador</h5>
+            </div>
+            <p className="text-center mt-4">
+              Tem certeza que deseja excluir esse colaborador?
+            </p>
+            <div className="modal-body modal-menu">
+              <button
+                onClick={deletarColaborador}
+                className="btn btn-danger btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Excluir
+              </button>
+              <button
+                className="btn btn-outline-primary btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

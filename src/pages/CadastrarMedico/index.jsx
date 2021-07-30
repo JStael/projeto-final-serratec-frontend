@@ -72,7 +72,7 @@ function CadastroMedico() {
     };
 
     http
-      .post("http://localhost:8080/api/medicos", usuario)
+      .post("medicos", usuario)
       .then((response) => {
         alert(`Usuário ${nome} cadastrado com sucesso!`);
         setNome("");

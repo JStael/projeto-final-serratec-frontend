@@ -1,4 +1,4 @@
-import axios from "axios";
+import http from "../../services/http";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../providers/GlobalContext";
@@ -17,8 +17,8 @@ function BuscarColaborador() {
     ev.preventDefault();
     setColaboradorNaoEncontrado("");
     setColaboradores([]);
-    axios
-      .get(`http://localhost:8080/api/usuarios/nome/${nome}`)
+    http
+      .get(`usuarios/nome/${nome}`)
       .then((response) => {
         setColaboradores(response.data);
         setNome("");
@@ -35,7 +35,7 @@ function BuscarColaborador() {
       <MenuLateral />
       <form className="form-consultar-colaborador" onSubmit={pesquisarColaborador}>
         <div className="header-consultar-colaborador mb-3 bg-primary text-white">
-          <h5 className="mb-0">Consulta de colaboradores</h5>
+          <h5 className="mb-0">Buscar colaborador</h5>
         </div>
         <div className="d-flex flex-row flex-wrap justify-content-between">
           <div className="corpo-consultar-colaborador">
