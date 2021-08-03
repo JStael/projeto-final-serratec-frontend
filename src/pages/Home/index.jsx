@@ -65,7 +65,7 @@ function Home() {
             </div>
             <div className="corpo-card-home">
               <Link
-                to="/cadastrar-procedimento"
+                to="/recibo/gerar-recibo"
                 className="btn btn-primary btn-card-home"
               >
                 Gerar
@@ -121,22 +121,16 @@ function Home() {
             </div>
             <div className="corpo-card-home">
               <Link
-                to="/configuracoes"
+                to="/configuracoes/empresa"
                 className="btn btn-primary btn-card-home"
               >
-                Cadastrar
+                Empresa
               </Link>
               <Link
-                to="/editar-paciente"
+                to="/configuracoes/sistema"
                 className="btn btn-primary btn-card-home"
               >
-                Editar
-              </Link>
-              <Link
-                to="/buscar-paciente"
-                className="btn btn-primary btn-card-home"
-              >
-                Consultar
+                Sistema
               </Link>
             </div>
           </div>

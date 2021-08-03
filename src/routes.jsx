@@ -23,6 +23,7 @@ import Procedimento from "./pages/Procedimento";
 import PrivateRoute from "./PrivateRoute";
 import ConfiguracaoEmpresa from "./pages/ConfiguracaoEmpresa";
 import ConfiguracaoSistema from "./pages/ConfiguracaoSistema";
+import GerarRecibo from "./pages/GerarRecibo";
 
 export function Routes() {
   return (
@@ -107,6 +108,15 @@ export function Routes() {
           <PrivateRoute
             path="/configuracoes/sistema"
             component={ConfiguracaoSistema}
+          />
+          <PrivateRoute
+            exact
+            path="/recibo"
+            component={GerarRecibo}
+          />
+          <PrivateRoute
+            path="/recibo/gerar-recibo"
+            component={GerarRecibo}
           />
           <PrivateRoute component={PaginaErro} />
         </Switch>

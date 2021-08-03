@@ -178,7 +178,7 @@ function CadastroMedico() {
                 <input
                   className="form-control py-1 px-4"
                   required
-                  type="data"
+                  type="date"
                   value={dataNascimento}
                   onChange={(evento) => setDataNascimento(evento.target.value)}
                   placeholder="YYYY-MM-DD"

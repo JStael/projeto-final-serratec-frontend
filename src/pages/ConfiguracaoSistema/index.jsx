@@ -1,87 +1,152 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import Header from "../../components/Header";
+import MenuLateral from "../../components/MenuLateral";
+import ModalCriarLayout from "../../components/ModalCriarLayout";
+import http from "../../services/http";
 import "./style.css";
 //import Avatar from "react-avatar-edit";
 
 function ConfiguracaoSistema() {
+  const history = useHistory();
+
+  const [layouts, setLayouts] = useState([]);
+
+  useEffect(() => {
+    http.get("layouts").then((response) => {
+      const { data } = response;
+      setLayouts(data);
+    });
+  }, []);
+
   return (
-    <div className="container p-0">
-      <form className="form-editar-empresa">
-        <div className="header-editar-empresa mb-3 bg-primary text-white">
-          <h5 className="mb-0">Editar Estetica da Empresa</h5>
-        </div>
-        <div className=" d-flex flex-row flex-wrap justify-content-around ">
-          <div className="corpo-editar-empresa1">
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Escolha a cor do site</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+    <>
+      <Header />
+      <MenuLateral />
+      <div className="container p-0">
+        <form className="form-config-sistema">
+          <div className="header-config-sistema mb-3 bg-primary text-white">
+            <h5 className="mb-0">Configurações do sistema</h5>
           </div>
-          <div className="botoes-editar-empresa-color">
-            <button className="btn btn-primary">Salvar</button>
-            <Link to="/home" className="btn btn-danger">
-              Cancelar
-            </Link>
-          </div>
-        </div>
-        <div className="Jesus">
-          
-          <div className="to-perdido">  
-           <button onClick={()=>Avatare()}></button>
-          </div>
-          <div className="Meachei">
-          <div className="botoes-editar-empresa-color">
-            <div>
-              <button className="btn btn-primary" id="22">Salvar</button>
+          <div className="aparencia mb-2">
+            <h5 className="titulo-aparencia">Aparência</h5>
+            <div className="d-flex justify-content-start w-100">
+              <div className="corpo-tema">
+                <label className="me-3">Tema:</label>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected value="light">
+                    Light
+                  </option>
+                  <option value="dark">Dark</option>
+                </select>
+              </div>
+              <div className="corpo-logo">
+                <label>Logo:</label>
+                <input type="file" className="form-control" />
+              </div>
             </div>
-            <div>
-              <Link to="/home" className="btn btn-danger">
+            <div className="botoes-tema">
+              <button className="btn btn-primary mx-2">Salvar</button>
+              <button
+                type="button"
+                className="btn btn-outline-danger mx-2"
+                onClick={() => history.goBack()}
+              >
                 Cancelar
-              </Link>
-            </div>
-            </div>
+              </button>
             </div>
           </div>
-      </form>
-    </div>
-  );
-  function Avatare() {
-    const [preview, setPreview] = useState(null);
-    function onClose() {
-      setPreview(null);
-    }
-    function onCrop(pv) {
-      setPreview(pv);
-    }
-    function onBeforeFileLoad(elem) {
-      if (elem.target.files[0].size > 2000000) {
-        alert("File is too big!");
-        elem.target.value = "";
-      }
-    }
-    return (
-      <div className="avatari">
-        {/* <Avatar
-          width={600}
-          height={300}
-          onCrop={onCrop}
-          onClose={onClose}
-          onBeforeFileLoad={onBeforeFileLoad}
-          src={null}
-        /> */}
-        <br />
-        {preview && (
-          <>
-            <img src={preview} alt="Preview" />
-            <a href={preview} download="avatar">
-              Download image
-            </a>
-          </>
-        )}
+          <hr />
+          <div className="recibo mb-5">
+            <h5 className="titulo-aparencia">Recibo</h5>
+            <div className="botoes-recibo">
+              <button
+                type="button"
+                className="btn btn-primary m-2"
+                data-bs-toggle="modal"
+                data-bs-target="#criarLayout"
+              >
+                Criar layout de recibo
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary m-2 dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Alterar layout de recibo
+              </button>
+              <ul class="dropdown-menu">
+                {layouts.map((layout) => (
+                  <li className="layout" key={layout.id}>
+                    Layout {layout.id}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </form>
+
+        {/* MODAL CRIAR LAYOUT */}
+
+        <ModalCriarLayout />
+        {/* <div className="Jesus">
+            <div className="to-perdido">
+              <button onClick={() => Avatare()}></button>
+            </div>
+            <div className="Meachei">
+              <div className="botoes-config-sistema-color">
+                <div>
+                  <button className="btn btn-primary" id="22">
+                    Salvar
+                  </button>
+                </div>
+                <div>
+                  <Link to="/home" className="btn btn-danger">
+                    Cancelar
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div> */}
       </div>
-    );
-  }
+    </>
+  );
+  // function Avatare() {
+  //   const [preview, setPreview] = useState(null);
+  //   function onClose() {
+  //     setPreview(null);
+  //   }
+  //   function onCrop(pv) {
+  //     setPreview(pv);
+  //   }
+  //   function onBeforeFileLoad(elem) {
+  //     if (elem.target.files[0].size > 2000000) {
+  //       alert("File is too big!");
+  //       elem.target.value = "";
+  //     }
+  //   }
+  //   return (
+  //     <div className="avatari">
+  //       {/* <Avatar
+  //         width={600}
+  //         height={300}
+  //         onCrop={onCrop}
+  //         onClose={onClose}
+  //         onBeforeFileLoad={onBeforeFileLoad}
+  //         src={null}
+  //       /> */}
+  //       <br />
+  //       {preview && (
+  //         <>
+  //           <img src={preview} alt="Preview" />
+  //           <a href={preview} download="avatar">
+  //             Download image
+  //           </a>
+  //         </>
+  //       )}
+  //     </div>
+  //   );
+  // }
 }
 export default ConfiguracaoSistema;

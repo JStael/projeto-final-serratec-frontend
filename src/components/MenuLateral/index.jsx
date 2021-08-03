@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import ModalMenu from "../ModalMenu";
 import "./style.css";
 
 function MenuLateral() {
+
+  const history = useHistory();
 
   const [expandir, setExpandir] = useState("");
   const [expandirBotao, setExpandirBotao] = useState("");
@@ -28,7 +31,7 @@ function MenuLateral() {
             </span>
             <span className="texto-menu">PROCEDIMENTOS</span>
           </li>
-          <li>
+          <li onClick={() => history.push("/recibo/gerar-recibo")}>
             <span className="icones">
               <i className="fas fa-receipt fs-4 text-white"></i>
             </span>

@@ -68,7 +68,7 @@ function CadastroMaster() {
         numero: numero,
         bairro: bairro,
         localidade: cidade,
-        estado: estado,
+        uf: estado,
       },
     };
 
@@ -177,7 +177,7 @@ function CadastroMaster() {
                 <label className="mb-2">Data de Nascimento</label>
                 <input
                   className="form-control py-1 px-4"
-                  type="data"
+                  type="date"
                   value={dataNascimento}
                   onChange={(evento) => setDataNascimento(evento.target.value)}
                   placeholder="YYYY-MM-DD"
