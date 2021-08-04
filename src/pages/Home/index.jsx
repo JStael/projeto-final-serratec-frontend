@@ -77,8 +77,9 @@ function Home() {
                 Editar
               </Link>
               <Link
-                to="/consultar-procedimento"
+                to="/pages/Historico"
                 className="btn btn-primary btn-card-home"
+                
               >
                 Histórico
               </Link>
