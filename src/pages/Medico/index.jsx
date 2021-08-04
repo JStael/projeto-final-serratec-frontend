@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
+import { Toast } from "react-bootstrap";
 import "./style.css";
 
 function Medico() {
@@ -14,6 +15,9 @@ function Medico() {
   const { medico } = context;
 
   const [readOnly, setReadOnly] = useState(true);
+
+  const [showAlterar, setShowAlterar] = useState(false);
+  const [showDeletar, setShowDeletar] = useState(false);
 
   const id = medico.id;
   const [nome, setNome] = useState(medico.nome);
@@ -78,7 +82,7 @@ function Medico() {
     http
       .put(`medicos/${id}`, medico)
       .then((response) => {
-        alert(`Cadastro do(a) médico(a) ${nome} alterado com sucesso!`);
+        mostrarToastAlterar();
       })
       .catch((erro) => {
         console.log("Hmmm.. Tem algo errado");
@@ -90,11 +94,19 @@ function Medico() {
     http
       .delete(`medicos/${id}`)
       .then((response) => {
-        alert(`Médico(a) ${nome} excluído com sucesso!`);
+        mostrarToastDeletar();
         history.goBack();
       })
       .catch((erro) => console.error(erro));
   };
+
+  const mostrarToastAlterar = () => {
+    setShowAlterar(true);
+  }
+
+  const mostrarToastDeletar = () => {
+    setShowDeletar(true);
+  }
 
   return (
     <>
@@ -305,6 +317,12 @@ function Medico() {
           </div>
         </div>
       </div>
+      <Toast className="toast btn-success bg-success" show={showAlterar} delay={5000} autohide>
+        <Toast.Body>{`Cadastro do médico(a) ${nome} alterado com sucesso!`}</Toast.Body>
+      </Toast>
+      <Toast className="toast btn-success bg-success" show={showDeletar} delay={5000} autohide>
+        <Toast.Body>{`Cadastro do médico(a) ${nome} excluído com sucesso!`}</Toast.Body>
+      </Toast>
     </>
   );
 }

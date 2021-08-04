@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
-
+import { Toast } from "react-bootstrap";
 import axios from "axios";
 import http from "../../services/http";
 
@@ -10,6 +10,8 @@ import "./style.css";
 
 function CadastroColaborador() {
   const history = useHistory();
+
+  const [show, setShow] = useState(false);
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -63,7 +65,7 @@ function CadastroColaborador() {
       endereco: {
         cep: cep,
         rua: rua,
-        numeroResidencia: numero,
+        numero: numero,
         bairro: bairro,
         cidade: cidade,
         estado: estado,
@@ -73,7 +75,7 @@ function CadastroColaborador() {
     http
       .post("secretarias", usuario)
       .then((response) => {
-        alert(`Colaborador(a) ${nome} cadastrado(a) com sucesso!`);
+        mostrarToast();
         setNome("");
         setEmail("");
         setUserName("");
@@ -92,9 +94,11 @@ function CadastroColaborador() {
         console.log("Algo deu erro");
         console.log(erro);
       });
+  };
 
-    };
-
+  const mostrarToast = () => {
+    setShow(true);
+  }
 
   return (
     <>
@@ -254,6 +258,9 @@ function CadastroColaborador() {
           </div>
         </form>
       </div>
+      <Toast className="toast btn-success bg-success" onClose={() => setShow(false)} show={show} delay={5000} autohide>
+        <Toast.Body>{`Colaborador(a) ${nome} cadastrado com sucesso!`}</Toast.Body>
+      </Toast>
     </>
   );
 }

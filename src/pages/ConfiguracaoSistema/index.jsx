@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
 import ModalCriarLayout from "../../components/ModalCriarLayout";
 import http from "../../services/http";
+
 import "./style.css";
 //import Avatar from "react-avatar-edit";
 
@@ -16,6 +17,7 @@ function ConfiguracaoSistema() {
     http.get("layouts").then((response) => {
       const { data } = response;
       setLayouts(data);
+      console.log(response);
     });
   }, []);
 
@@ -33,11 +35,12 @@ function ConfiguracaoSistema() {
             <div className="d-flex justify-content-start w-100">
               <div className="corpo-tema">
                 <label className="me-3">Tema:</label>
-                <select class="form-select" aria-label="Default select example">
-                  <option selected value="light">
-                    Light
-                  </option>
-                  <option value="dark">Dark</option>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                >
+                  <option defaultValue="light">Light</option>
+                  <option defaultValue="dark">Dark</option>
                 </select>
               </div>
               <div className="corpo-logo">
@@ -68,21 +71,23 @@ function ConfiguracaoSistema() {
               >
                 Criar layout de recibo
               </button>
-              <button
-                type="button"
-                className="btn btn-primary m-2 dropdown-toggle"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Alterar layout de recibo
-              </button>
-              <ul class="dropdown-menu">
-                {layouts.map((layout) => (
-                  <li className="layout" key={layout.id}>
-                    Layout {layout.id}
-                  </li>
-                ))}
-              </ul>
+              <div className="btn-group dropend">
+                <button
+                  type="button"
+                  className="btn btn-primary m-2 dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Alterar layout de recibo
+                </button>
+                <ul className="dropdown-menu lista-recibo´">
+                  {layouts.map((layout) => (
+                    <li className="layout p-2" key={layout.id}>
+                      Layout {layout.id}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </form>

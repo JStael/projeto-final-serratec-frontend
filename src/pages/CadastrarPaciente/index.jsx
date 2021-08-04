@@ -4,11 +4,14 @@ import axios from "axios";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
 import http from "../../services/http";
+import { Toast } from "react-bootstrap";
 
 import "./style.css";
 
 function CadastroPaciente() {
   const history = useHistory();
+
+  const [show, setShow] = useState(false);
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -68,7 +71,7 @@ function CadastroPaciente() {
     http
       .post("pacientes", paciente)
       .then((response) => {
-        alert(`Paciente ${nome} cadastrado(a) com sucesso!`);
+        mostrarToast();
         setNome("");
         setEmail("");
         setCpf("");
@@ -86,6 +89,10 @@ function CadastroPaciente() {
         console.log(erro);
       });
   };
+
+  const mostrarToast = () => {
+    setShow(true);
+  }
 
   return (
     <>
@@ -230,6 +237,9 @@ function CadastroPaciente() {
           </div>
         </form>
       </div>
+      <Toast className="toast btn-success bg-success" onClose={() => setShow(false)} show={show} delay={5000} autohide>
+        <Toast.Body>{`Paciente ${nome} cadastrado(a) com sucesso!`}</Toast.Body>
+      </Toast>
     </>
   );
 }

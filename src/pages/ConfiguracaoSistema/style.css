@@ -79,6 +79,20 @@
   min-height: 300px;
 }
 
+.lista-recibo {
+  margin-top: -2rem!important;
+  margin-left: 8rem!important;
+}
+
+.layout {
+  padding: .5rem 1rem;
+  cursor: pointer;
+}
+
+.layout:hover {
+  background-color: #f1f1f1;
+}
+
 /* .avatari {
   border-style: dotted;
 }

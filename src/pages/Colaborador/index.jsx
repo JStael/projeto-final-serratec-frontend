@@ -5,30 +5,36 @@ import http from "../../services/http";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
+import { Toast } from "react-bootstrap";
 import "./style.css";
 
 function Colaborador() {
   const context = useContext(GlobalContext);
   const { colaborador } = context;
+  const { endereco } = context.colaborador;
   const history = useHistory();
+
+  const [showAlterar, setShowAlterar] = useState(false);
+  const [showDeletar, setShowDeletar] = useState(false);
 
   const [readOnly, setReadOnly] = useState(true);
 
   const id = colaborador.id;
   const [nome, setNome] = useState(colaborador.nome);
   const [userName, setUserName] = useState(colaborador.username);
+  const [senha, setSenha] = useState("");
   const [email, setEmail] = useState(colaborador.email);
   const [cpf, setCpf] = useState(colaborador.cpf);
   const [telefone, setTelefone] = useState(colaborador.telefone);
   const [dataNascimento, setDataNascimento] = useState(
     colaborador.dataNascimento
   );
-  const [cep, setCep] = useState("");
-  const [rua, setRua] = useState("");
-  const [numero, setNumero] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [estado, setEstado] = useState("");
+  const [cep, setCep] = useState(endereco.cep);
+  const [rua, setRua] = useState(endereco.logradouro);
+  const [numero, setNumero] = useState(endereco.numero);
+  const [bairro, setBairro] = useState(endereco.bairro);
+  const [cidade, setCidade] = useState(endereco.localidade);
+  const [estado, setEstado] = useState(endereco.uf);
 
   const cpfHandle = (evento) => {
     if (evento.target.value.length <= 11) setCpf(evento.target.value);
@@ -62,6 +68,7 @@ function Colaborador() {
       id: id,
       nome: nome,
       email: email,
+      senha: senha,
       cpf: cpf,
       telefone: telefone,
       dataNascimento: dataNascimento,
@@ -78,9 +85,11 @@ function Colaborador() {
     http
       .put(`secretarias/${id}`, colaborador)
       .then((response) => {
-        alert(`Cadastro do paciente ${nome} alterado com sucesso!`);
+        mostrarToastAlterar();
+        console.log(response);
         setNome("");
         setEmail("");
+        setSenha("");
         setCpf("");
         setTelefone("");
         setDataNascimento("");
@@ -101,11 +110,19 @@ function Colaborador() {
     http
       .delete(`usuarios/${id}`)
       .then((response) => {
-        alert(`Usuário master ${nome} excluído com sucesso!`);
+        mostrarToastDeletar();
         history.goBack();
       })
       .catch((erro) => console.error(erro));
   };
+
+  const mostrarToastAlterar = () => {
+    setShowAlterar(true);
+  }
+
+  const mostrarToastDeletar = () => {
+    setShowDeletar(true);
+  }
 
   return (
     <>
@@ -143,7 +160,7 @@ function Colaborador() {
                   type="text"
                   value={nome}
                   onChange={(evento) => setNome(evento.target.value)}
-                  placeholder="Digite o nome completo do paciente"
+                  placeholder="Digite o nome completo do colaborador"
                 />
               </div>
               <div>
@@ -159,6 +176,18 @@ function Colaborador() {
                 />
               </div>
               <div>
+                <label className="mb-2">Senha</label>
+                <input
+                  readOnly={readOnly}
+                  className="form-control py-1 px-4"
+                  required
+                  type="password"
+                  value={senha}
+                  onChange={(evento) => setSenha(evento.target.value)}
+                  placeholder="Crie uma senha"
+                />
+              </div>
+              <div>
                 <label className="mb-2">Email</label>
                 <input
                   readOnly={readOnly}
@@ -167,7 +196,7 @@ function Colaborador() {
                   type="email"
                   value={email}
                   onChange={(evento) => setEmail(evento.target.value)}
-                  placeholder="Digite o email do paciente"
+                  placeholder="Digite o email do colaborador"
                 />
               </div>
               <div>
@@ -316,6 +345,12 @@ function Colaborador() {
           </div>
         </div>
       </div>
+      <Toast className="toast btn-success bg-success" show={showAlterar} delay={5000} autohide>
+        <Toast.Body>{`Cadastro do colaborador ${nome} alterado com sucesso!`}</Toast.Body>
+      </Toast>
+      <Toast className="toast btn-success bg-success" show={showDeletar} delay={5000} autohide>
+        <Toast.Body>{`Cadastro do colaborador ${nome} excluído com sucesso!`}</Toast.Body>
+      </Toast>
     </>
   );
 }

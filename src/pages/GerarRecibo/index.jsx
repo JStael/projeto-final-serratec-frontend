@@ -26,11 +26,11 @@ function GerarRecibo() {
             <div className="corpo-gerar-recibo">
               <div>
                 <label className="mb-2">Layout do recibo</label>
-                <select class="form-select">
-                  <option selected>Selecione o modelo do layout</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                <select className="form-select">
+                  <option defaultValue>Selecione o modelo do layout</option>
+                  <option defaultValue="1">1</option>
+                  <option defaultValue="2">2</option>
+                  <option defaultValue="3">3</option>
                 </select>
               </div>
               <div>

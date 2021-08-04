@@ -22,7 +22,6 @@ function BuscarColaborador() {
       .then((response) => {
         setColaboradores(response.data);
         setNome("");
-        console.log(colaboradores);
       })
       .catch((response) => {
         if (response.request.status === 404) setColaboradorNaoEncontrado("Colaborador não encontrado.")

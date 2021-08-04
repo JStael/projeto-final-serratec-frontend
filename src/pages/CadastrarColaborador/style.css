@@ -49,3 +49,11 @@
     margin: 20px 10px;
 }
 
+.toast {
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 1rem;
+    left: calc(50% - 150px);
+}
