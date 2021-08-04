@@ -27,23 +27,24 @@ function ConfiguracaoSistema() {
           </div>
         </div>
         <div className="Jesus">
-          
-          <div className="to-perdido">  
-           <button onClick={()=>Avatare()}></button>
+          <div className="to-perdido">
+            <button onClick={() => Avatare()}></button>
           </div>
           <div className="Meachei">
-          <div className="botoes-editar-empresa-color">
-            <div>
-              <button className="btn btn-primary" id="22">Salvar</button>
-            </div>
-            <div>
-              <Link to="/home" className="btn btn-danger">
-                Cancelar
-              </Link>
-            </div>
-            </div>
+            <div className="botoes-editar-empresa-color">
+              <div>
+                <button className="btn btn-primary" id="22">
+                  Salvar
+                </button>
+              </div>
+              <div>
+                <Link to="/home" className="btn btn-danger">
+                  Cancelar
+                </Link>
+              </div>
             </div>
           </div>
+        </div>
       </form>
     </div>
   );
@@ -59,6 +60,20 @@ function ConfiguracaoSistema() {
       if (elem.target.files[0].size > 2000000) {
         alert("File is too big!");
         elem.target.value = "";
+      }
+
+      function readImage() {
+        if (this.files && this.files[0]) {
+          var file = new FileReader();
+          file.onload = function (e) {
+            document.getElementById("preview").src = e.target.result;
+          };
+          file.readAsDataURL(this.files[0]);
+
+          document
+            .getElementById("img-input")
+            .addEventListener("change", readImage, false);
+        }
       }
     }
     return (
