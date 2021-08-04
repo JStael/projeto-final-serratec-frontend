@@ -1,14 +1,18 @@
+import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
 import ModalCriarLayout from "../../components/ModalCriarLayout";
+import ModalEditarLayout from "../../components/ModalEditarLayout";
+import { GlobalContext } from "../../providers/GlobalContext";
 import http from "../../services/http";
 
 import "./style.css";
-//import Avatar from "react-avatar-edit";
 
 function ConfiguracaoSistema() {
+
+  const { setLayout } = useContext(GlobalContext);
   const history = useHistory();
 
   const [layouts, setLayouts] = useState([]);
@@ -17,7 +21,6 @@ function ConfiguracaoSistema() {
     http.get("layouts").then((response) => {
       const { data } = response;
       setLayouts(data);
-      console.log(response);
     });
   }, []);
 
@@ -80,10 +83,16 @@ function ConfiguracaoSistema() {
                 >
                   Alterar layout de recibo
                 </button>
-                <ul className="dropdown-menu lista-recibo´">
+                <ul className="dropdown-menu lista-recibo">
                   {layouts.map((layout) => (
-                    <li className="layout p-2" key={layout.id}>
-                      Layout {layout.id}
+                    <li
+                      className="layout p-2"
+                      key={layout.id}
+                      data-bs-toggle="modal"
+                      data-bs-target="#alterarLayout"
+                      onClick={() => setLayout(layout)}
+                    >
+                      {layout.nome}
                     </li>
                   ))}
                 </ul>
@@ -93,65 +102,11 @@ function ConfiguracaoSistema() {
         </form>
 
         {/* MODAL CRIAR LAYOUT */}
-
         <ModalCriarLayout />
-        {/* <div className="Jesus">
-            <div className="to-perdido">
-              <button onClick={() => Avatare()}></button>
-            </div>
-            <div className="Meachei">
-              <div className="botoes-config-sistema-color">
-                <div>
-                  <button className="btn btn-primary" id="22">
-                    Salvar
-                  </button>
-                </div>
-                <div>
-                  <Link to="/home" className="btn btn-danger">
-                    Cancelar
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div> */}
+        {/* MODAL ALTERAR LAYOUT */}
+        <ModalEditarLayout />
       </div>
     </>
   );
-  // function Avatare() {
-  //   const [preview, setPreview] = useState(null);
-  //   function onClose() {
-  //     setPreview(null);
-  //   }
-  //   function onCrop(pv) {
-  //     setPreview(pv);
-  //   }
-  //   function onBeforeFileLoad(elem) {
-  //     if (elem.target.files[0].size > 2000000) {
-  //       alert("File is too big!");
-  //       elem.target.value = "";
-  //     }
-  //   }
-  //   return (
-  //     <div className="avatari">
-  //       {/* <Avatar
-  //         width={600}
-  //         height={300}
-  //         onCrop={onCrop}
-  //         onClose={onClose}
-  //         onBeforeFileLoad={onBeforeFileLoad}
-  //         src={null}
-  //       /> */}
-  //       <br />
-  //       {preview && (
-  //         <>
-  //           <img src={preview} alt="Preview" />
-  //           <a href={preview} download="avatar">
-  //             Download image
-  //           </a>
-  //         </>
-  //       )}
-  //     </div>
-  //   );
-  // }
 }
 export default ConfiguracaoSistema;

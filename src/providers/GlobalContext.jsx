@@ -9,6 +9,8 @@ export const GlobalProvider = ({ children }) => {
   const [medico, setMedico] = useState({});
   const [procedimento, setProcedimento] = useState({});
 
+  const [layout, setLayout] = useState({});
+
   const [autenticado, setAutenticado] = useState(false);
   const [usuario, setUsuario] = useState("")
 
@@ -40,7 +42,9 @@ export const GlobalProvider = ({ children }) => {
         setProcedimento,
         autenticado,
         usuario,
-        logout
+        logout,
+        layout,
+        setLayout
       }}
     >
       {children}

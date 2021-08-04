@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import ModalMenu from "../ModalMenu";
 import "./style.css";
 
 function MenuLateral() {
-
-  const history = useHistory();
 
   const [expandir, setExpandir] = useState("");
   const [expandirBotao, setExpandirBotao] = useState("");
@@ -31,7 +28,8 @@ function MenuLateral() {
             </span>
             <span className="texto-menu">PROCEDIMENTOS</span>
           </li>
-          <li onClick={() => history.push("/recibo/gerar-recibo")}>
+          <li data-bs-toggle="modal"
+            data-bs-target="#recibo">
             <span className="icones">
               <i className="fas fa-receipt fs-4 text-white"></i>
             </span>
@@ -61,8 +59,8 @@ function MenuLateral() {
       <ModalMenu
         id="pacientes"
         titulo="Pacientes"
-        rotaCadastrar="cadastrar-paciente"
-        rotaConsultar="buscar-paciente"
+        rota1="cadastrar-paciente"
+        rota2="buscar-paciente"
         tituloBtn1="Cadastrar"
         tituloBtn2="Consultar"
       />
@@ -70,8 +68,8 @@ function MenuLateral() {
       <ModalMenu
         id="procedimentos"
         titulo="Procedimentos"
-        rotaCadastrar="cadastrar-procedimento"
-        rotaConsultar="buscar-procedimento"
+        rota1="cadastrar-procedimento"
+        rota2="buscar-procedimento"
         tituloBtn1="Cadastrar"
         tituloBtn2="Consultar"
       />
@@ -79,17 +77,26 @@ function MenuLateral() {
       <ModalMenu
         id="usuarios"
         titulo="Usuários"
-        rotaCadastrar="cadastrar-usuario"
-        rotaConsultar="buscar-usuario"
+        rota1="cadastrar-usuario"
+        rota2="buscar-usuario"
         tituloBtn1="Cadastrar"
         tituloBtn2="Consultar"
+      />
+      {/* MODAL RECIBO */}
+      <ModalMenu
+        id="recibo"
+        titulo="Recibo"
+        rota1="recibo/gerar-recibo"
+        rota2="recibo/historico-recibo"
+        tituloBtn1="Gerar"
+        tituloBtn2="Histórico"
       />
       {/* MODAL CONFIGURAÇÕES */}
       <ModalMenu
         id="configuracoes"
         titulo="Configurações"
-        rotaCadastrar="configuracoes/empresa"
-        rotaConsultar="configuracoes/sistema"
+        rota1="configuracoes/empresa"
+        rota2="configuracoes/sistema"
         tituloBtn1="Empresa"
         tituloBtn2="Sistema"
       />

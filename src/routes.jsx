@@ -121,7 +121,7 @@ export function Routes() {
           />
            <PrivateRoute
            exact
-            path="/pages/Historico"
+            path="/recibo/historico-recibo"
             component={Historico}
           />
           <PrivateRoute component={PaginaErro} />

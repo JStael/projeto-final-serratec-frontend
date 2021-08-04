@@ -71,15 +71,8 @@ function Home() {
                 Gerar
               </Link>
               <Link
-                to="/editar-procedimento"
+                to="/recibo/historico-recibo"
                 className="btn btn-primary btn-card-home"
-              >
-                Editar
-              </Link>
-              <Link
-                to="/pages/Historico"
-                className="btn btn-primary btn-card-home"
-                
               >
                 Histórico
               </Link>

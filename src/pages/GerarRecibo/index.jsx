@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useHistory } from "react-router";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
+import http from "../../services/http";
 import "./style.css";
 
 function GerarRecibo() {
@@ -10,6 +11,19 @@ function GerarRecibo() {
   const [paciente, setPaciente] = useState("");
   const [medico, setMedico] = useState("");
   const [procedimento, setProcedimento] = useState("");
+  const [layout, setLayout] = useState("");
+
+  const [layouts, setLayouts] = useState([]);
+
+  useEffect(() => {
+    http
+      .get("layouts")
+      .then(response => { 
+        const { data } = response;
+        setLayouts(data)
+      })
+      .catch(erro => console.error(erro))
+    }, []);
 
   const gerarRecibo = () => {};
 
@@ -26,12 +40,11 @@ function GerarRecibo() {
             <div className="corpo-gerar-recibo">
               <div>
                 <label className="mb-2">Layout do recibo</label>
-                <select className="form-select">
-                  <option defaultValue>Selecione o modelo do layout</option>
-                  <option defaultValue="1">1</option>
-                  <option defaultValue="2">2</option>
-                  <option defaultValue="3">3</option>
-                </select>
+                 <select className="form-select">
+                  {layouts.map((layout) => (
+                    <option value={layout.nome} key={layout.id}>{layout.nome}</option>
+                  ))} 
+                </select>  
               </div>
               <div>
                 <label className="mb-2">Paciente</label>
@@ -70,6 +83,7 @@ function GerarRecibo() {
             <div className="botoes-gerar-recibo">
               <button className="btn btn-primary">Gerar</button>
               <button
+                type="button"
                 className="btn btn-outline-primary"
                 onClick={() => history.goBack()}
               >
