@@ -1,0 +1,57 @@
+
+
+
+
+.form-cadastro-procedimentos {
+    width: 60%;
+    min-width: 650px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fcfcfc;
+    margin: 30px auto;
+    border-radius: 5px;
+    -webkit-box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
+    -moz-box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
+    box-shadow: 10px 10px 17px 1px rgba(115, 115, 115, 1);
+}
+
+.header-cadastro-procedimentos {
+    width: 100%;
+    background-color: aquamarine;
+    border-radius: 5px 5px 0 0;
+    padding: 1rem;
+}
+
+.corpo-cadastro-procedimentos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60%;
+    margin-top: 2rem;
+}
+
+.botoes-cadastro-procedimentos {
+    margin: 1rem 2.2rem;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+    height: auto;
+}
+
+.botoes-cadastro-procedimentos .btn {
+    width: 190px;
+    font-size: 1rem;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px 0;
+}
+
+
+
