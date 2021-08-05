@@ -5,7 +5,6 @@ import { useHistory } from "react-router";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
-import { Toast } from "react-bootstrap";
 import "./style.css";
 
 function Medico() {
@@ -16,16 +15,16 @@ function Medico() {
 
   const [readOnly, setReadOnly] = useState(true);
 
-  const [showAlterar, setShowAlterar] = useState(false);
-  const [showDeletar, setShowDeletar] = useState(false);
-
   const id = medico.id;
   const [nome, setNome] = useState(medico.nome);
+  const [userName, setUserName] = useState(medico.username);
+  const [senha, setSenha] = useState("");
   const [email, setEmail] = useState(medico.email);
   const [cpf, setCpf] = useState(medico.cpf);
   const [telefone, setTelefone] = useState(medico.telefone);
   const [dataNascimento, setDataNascimento] = useState(medico.dataNascimento);
   const [crm, setCrm] = useState(medico.crm);
+  const [especialidade, setEspecialidade] = useState(medico.especialidade);
   const [cep, setCep] = useState(medico.endereco.cep);
   const [rua, setRua] = useState(medico.endereco.logradouro);
   const [numero, setNumero] = useState(medico.endereco.numero);
@@ -69,6 +68,7 @@ function Medico() {
       telefone: telefone,
       dataNascimento: dataNascimento,
       crm: crm,
+      especialidade: especialidade,
       endereco: {
         cep: cep,
         logradouro: rua,
@@ -82,7 +82,7 @@ function Medico() {
     http
       .put(`medicos/${id}`, medico)
       .then((response) => {
-        mostrarToastAlterar();
+        alert(`Cadastro do médico(a) ${nome} alterado com sucesso!`);
       })
       .catch((erro) => {
         console.log("Hmmm.. Tem algo errado");
@@ -94,19 +94,11 @@ function Medico() {
     http
       .delete(`medicos/${id}`)
       .then((response) => {
-        mostrarToastDeletar();
+        alert(`Cadastro do médico(a) ${nome} excluído com sucesso!`);
         history.goBack();
       })
       .catch((erro) => console.error(erro));
   };
-
-  const mostrarToastAlterar = () => {
-    setShowAlterar(true);
-  }
-
-  const mostrarToastDeletar = () => {
-    setShowDeletar(true);
-  }
 
   return (
     <>
@@ -145,6 +137,30 @@ function Medico() {
                   value={nome}
                   onChange={(evento) => setNome(evento.target.value)}
                   placeholder="Digite o nome do usuário"
+                />
+              </div>
+              <div>
+                <label className="mb-2">Usuário</label>
+                <input
+                  readOnly={readOnly}
+                  className="form-control py-1 px-4"
+                  required
+                  type="text"
+                  value={userName}
+                  onChange={(evento) => setUserName(evento.target.value)}
+                  placeholder="Digite o nome de usuário"
+                />
+              </div>
+              <div>
+                <label className="mb-2">Senha</label>
+                <input
+                  readOnly={readOnly}
+                  className="form-control py-1 px-4"
+                  required
+                  type="password"
+                  value={senha}
+                  onChange={(evento) => setSenha(evento.target.value)}
+                  placeholder="Crie uma senha"
                 />
               </div>
               <div>
@@ -195,6 +211,8 @@ function Medico() {
                   placeholder="YYYY-MM-DD"
                 />
               </div>
+            </div>
+            <div className="corpo-consulta-medico2">
               <div>
                 <label className="mb-2">CRM</label>
                 <input
@@ -207,8 +225,18 @@ function Medico() {
                   placeholder="0000000-0/BR"
                 />
               </div>
-            </div>
-            <div className="corpo-consulta-medico2">
+              <div>
+                <label className="mb-2">Especialidade</label>
+                <input
+                  readOnly={readOnly}
+                  className="form-control py-1 px-4"
+                  required
+                  type="text"
+                  value={especialidade}
+                  onChange={(evento) => setCrm(evento.target.value)}
+                  placeholder="Ex: Clínico Geral"
+                />
+              </div>
               <div>
                 <label className="mb-2">Cep</label>
                 <input
@@ -317,12 +345,6 @@ function Medico() {
           </div>
         </div>
       </div>
-      <Toast className="toast btn-success bg-success" show={showAlterar} delay={5000} autohide>
-        <Toast.Body>{`Cadastro do médico(a) ${nome} alterado com sucesso!`}</Toast.Body>
-      </Toast>
-      <Toast className="toast btn-success bg-success" show={showDeletar} delay={5000} autohide>
-        <Toast.Body>{`Cadastro do médico(a) ${nome} excluído com sucesso!`}</Toast.Body>
-      </Toast>
     </>
   );
 }

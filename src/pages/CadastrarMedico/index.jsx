@@ -4,14 +4,11 @@ import axios from "axios";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
 import http from "../../services/http";
-import { Toast } from "react-bootstrap";
 
 import "./style.css";
 
 function CadastroMedico() {
   const history = useHistory();
-
-  const [show, setShow] = useState(false);
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -21,6 +18,7 @@ function CadastroMedico() {
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [crm, setCrm] = useState("");
+  const [especialidade, setEspecialidade] = useState("");
   const [cep, setCep] = useState("");
   const [rua, setRua] = useState("");
   const [numero, setNumero] = useState("");
@@ -64,6 +62,7 @@ function CadastroMedico() {
       telefone: telefone,
       dataNascimento: dataNascimento,
       crm: crm,
+      especialidade: especialidade,
       endereco: {
         cep: cep,
         logradouro: rua,
@@ -77,7 +76,7 @@ function CadastroMedico() {
     http
       .post("medicos", usuario)
       .then((response) => {
-        mostrarToast()
+        alert(`Usuário ${nome} cadastrado com sucesso!`);
         setNome("");
         setEmail("");
         setUserName("");
@@ -86,6 +85,7 @@ function CadastroMedico() {
         setTelefone("");
         setDataNascimento("");
         setCrm("");
+        setEspecialidade("");
         setCep("");
         setRua("");
         setNumero("");
@@ -98,10 +98,6 @@ function CadastroMedico() {
         console.log(erro);
       });
   };
-
-  const mostrarToast = () => {
-    setShow(true);
-  }
 
   return (
     <>
@@ -202,6 +198,17 @@ function CadastroMedico() {
                   placeholder="0000000-0/BR"
                 />
               </div>
+              <div>
+                <label className="mb-2">Especialidade</label>
+                <input
+                  className="form-control py-1 px-4"
+                  required
+                  type="text"
+                  value={especialidade}
+                  onChange={(evento) => setEspecialidade(evento.target.value)}
+                  placeholder="Ex: Clínico geral"
+                />
+              </div>
             </div>
             <div className="corpo-cadastro-medico2">
               <div>
@@ -279,9 +286,6 @@ function CadastroMedico() {
           </div>
         </form>
       </div>
-      <Toast className="toast btn-success bg-success" onClose={() => setShow(false)} show={show} delay={5000} autohide>
-        <Toast.Body>{`Usuário ${nome} cadastrado com sucesso!`}</Toast.Body>
-      </Toast>
     </>
   );
 }
