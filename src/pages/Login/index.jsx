@@ -29,6 +29,7 @@ function Login() {
             const { token, usuario } = response.data
             localStorage.setItem("id", usuario.id);
             localStorage.setItem("token", token);
+            console.log(token)
             localStorage.setItem(
                 "userName", usuario.username
             );

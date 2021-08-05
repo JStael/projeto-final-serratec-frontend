@@ -5,21 +5,15 @@ import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
 import "./style.css";
 import { useEffect } from "react";
-import { Group, List } from "@material-ui/icons";
-import { ListGroupItem } from "reactstrap";
-
 function Historico() {
   const history = useHistory();
 
   const [recibos, setRecibos] = useState([]);
   useEffect(() => {
-    http
-      .get("http://localhost:8080/api/recibos")
-      .then((response) => {
-        const { data } = response;
-        setRecibos(data);
-      })
-      .catch((erro) => console.error(erro));
+    setRecibos([
+      { nome: "Joao", data: "30/07/1996", genero: "masculino" },
+      { nome: "Joao", idade: "29", genero: "masculino" },
+    ]);
   }, []);
 
   const abrirRecibo = () => {};
@@ -33,23 +27,41 @@ function Historico() {
           <div className="header-cadastro-procedimentos bg-primary text-white m-0">
             <h5 className="mb-0">Historico de Recibo</h5>
           </div>
-          <ul className="list-group">
-            {recibos.map((recibo) => (
-              <li className="list-group-item">
-                <input
-                  className="form-check-input me-1"
-                  type="checkbox"
-                  value={recibo.nome}
-                  aria-label="..."
-                />
-              </li>
-            ))}
-          </ul>
+          <div className="fora w-100 px-4">
+            <table className="table px-2">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last</th>
+                  <th scope="col">Handle</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recibos.map((recibo) => (
+                  <tr>
+                    <th scope="row">
+                      {" "}
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                    </th>
+                    <td>{recibo.nome}</td>
+                    <td>{recibo.idade}</td>
+                    <td>{recibo.genero}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className=" d-flex flex-row flex-wrap justify-content-center ">
             <div className="corpo-cadastro-procedimentos w-100"></div>
             <div className="botoes-cadastro-paciente">
               <button className="btn btn-primary" onClick={() => abrirRecibo()}>
-                Pegar
+                Abrir
               </button>
               <button
                 className="btn btn-danger"
