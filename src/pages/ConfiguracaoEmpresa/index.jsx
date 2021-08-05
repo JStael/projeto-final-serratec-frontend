@@ -12,6 +12,7 @@ function ConfiguracaoEmpresa() {
 
   const [show, setShow] = useState(false);
 
+  const [id, setId] = useState("");
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
   const [email, setEmail] = useState("");
@@ -28,8 +29,8 @@ function ConfiguracaoEmpresa() {
     http
       .get("empresa")
       .then((response) => {
-        console.log(response);
         const { data } = response;
+        setId(data[0].id);
         setNomeFantasia(data[0].nomeFantasia);
         setRazaoSocial(data[0].razaoSocial);
         setEmail(data[0].email);
@@ -65,7 +66,7 @@ function ConfiguracaoEmpresa() {
     };
 
     http
-      .put(`empresa`, empresa)
+      .put(`empresa/${id}`, empresa)
       .then((response) => {
         mostrarToast();
       })

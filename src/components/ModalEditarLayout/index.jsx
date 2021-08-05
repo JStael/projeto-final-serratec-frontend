@@ -1,54 +1,83 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../providers/GlobalContext";
 import http from "../../services/http";
-import { Toast } from "react-bootstrap";
+import "./style.css";
 
 function ModalEditarLayout() {
-
-  const { layout } = useContext(GlobalContext)
-  console.log(layout);
-
-  const [showAlterar, setShowAlterar] = useState(false);
-  const [showDeletar, setShowDeletar] = useState(false);
+  const { layout } = useContext(GlobalContext);
+  const [checkedDataEmissao, setCheckedDataEmissao] = useState(false);
+  const [checkedColab, setCheckedColab] = useState(false);
+  const [checkedFormaPagamento, setCheckedFormaPagamento] = useState(false);
+  const [checkedAtivo, setCheckedAtivo] = useState(false);
 
   const id = layout.id;
-  const [nome, setNome] = useState(layout.nome);
-  const [dataEmissao, setDataEmissao] = useState(layout.data);
-  const [colaborador, setColadorador] = useState(layout.secretaria);
-  const [formaPagamento, setFormaPagamento] = useState(layout.formaPagamento);
-  const [ativo, setAtivo] = useState(layout.ativo);
+  const [nome, setNome] = useState(false);
+  const [dataEmissao, setDataEmissao] = useState(false);
+  const [colaborador, setColadorador] = useState(false);
+  const [formaPagamento, setFormaPagamento] = useState(false);
+  const [ativo, setAtivo] = useState(false);
 
-  console.log(colaborador);
-  console.log(layout.secretaria);
+  useEffect(() => {
+    setCheckedColab(layout.secretaria);
+    setCheckedDataEmissao(layout.data);
+    setCheckedFormaPagamento(layout.formaPagamento);
+    setCheckedAtivo(layout.ativo);
+    setNome(layout.nome);
+    setDataEmissao(layout.data);
+    setColadorador(layout.secretaria);
+    setFormaPagamento(layout.formaPagamento);
+    setAtivo(layout.ativo);
+    return
+  }, [layout]);
+
   const editarLayout = (evento) => {
     evento.preventDefault();
 
-    const layout = {
+    const layoutEditado = {
       nome: nome,
       secretaria: colaborador,
       data: dataEmissao,
       formaPagamento: formaPagamento,
+      ativo: ativo,
     };
-    console.log(layout);
 
-    http.put(`layouts/${id}`, layout).then((response) => mostrarToastAlterar());
+    http
+      .put(`layouts/${id}`, layoutEditado)
+      .then((response) => { 
+        alert(`Layout ${nome} alterado com sucesso!`)
+        console.log(response);
+      })
+      .catch((erro) => console.error(erro));
   };
 
   const deletarLayout = () => {
     http
-      .delete(`delete/${id}`)
-      .then(response => {
-        mostrarToastDeletar();
+      .delete(`layouts/${id}`)
+      .then((response) => {
+        alert(`Layout ${nome} excluído com sucesso!`)
       })
-  }
+      .catch((erro) => console.error(erro));
+  };
 
-  const mostrarToastAlterar = () => {
-    setShowAlterar(true);
-  }
+  const handleChangeColab = ({ target }) => {
+    setCheckedColab(!checkedColab);
+    setColadorador(target.checked);
+  };
 
-  const mostrarToastDeletar = () => {
-    setShowDeletar(true);
-  }
+  const handleChangeData = ({ target }) => {
+    setCheckedDataEmissao(!checkedDataEmissao);
+    setDataEmissao(target.checked);
+  };
+
+  const handleChangePgto = ({ target }) => {
+    setCheckedFormaPagamento(!checkedFormaPagamento);
+    setFormaPagamento(target.checked);
+  };
+
+  const handleChangeAtivo = ({ target }) => {
+    setCheckedAtivo(!checkedAtivo);
+    setAtivo(target.checked);
+  };
 
   return (
     <div className="modal fade " id="alterarLayout" aria-hidden="true">
@@ -67,7 +96,7 @@ function ModalEditarLayout() {
                 className="form-control mb-3"
                 type="text"
                 value={nome}
-                onChange={(evento) => setNome(evento.target.value)}
+                onChange={({target}) => setNome(target.value)}
               />
               <div className="form-check form-switch">
                 <input
@@ -75,7 +104,8 @@ function ModalEditarLayout() {
                   type="checkbox"
                   id="dataEmissao"
                   value={dataEmissao}
-                  onChange={(evento) => setDataEmissao(evento.target.value)}
+                  checked={checkedDataEmissao}
+                  onChange={handleChangeData}
                 />
                 <label className="form-check-label" htmlFor="dataEmissao">
                   Data de emissão
@@ -86,8 +116,9 @@ function ModalEditarLayout() {
                   className="form-check-input"
                   type="checkbox"
                   id="colaborador"
-                  value={[colaborador]}
-                  onChange={(evento) => setColadorador(evento.target.checked)}
+                  value={colaborador}
+                  checked={checkedColab}
+                  onChange={handleChangeColab}
                 />
                 <label className="form-check-label" htmlFor="colaborador">
                   Coladorador
@@ -99,7 +130,8 @@ function ModalEditarLayout() {
                   type="checkbox"
                   id="formaPagamento"
                   value={formaPagamento}
-                  onChange={(evento) => setFormaPagamento(evento.target.checked)}
+                  checked={checkedFormaPagamento}
+                  onChange={handleChangePgto}
                 />
                 <label className="form-check-label" htmlFor="formaPagamento">
                   Forma de pagamento
@@ -111,36 +143,41 @@ function ModalEditarLayout() {
                   type="checkbox"
                   id="ativo"
                   value={ativo}
-                  onChange={(evento) => setAtivo(evento.target.checked)}
+                  checked={checkedAtivo}
+                  onChange={handleChangeAtivo}
                 />
                 <label className="form-check-label" htmlFor="ativo">
                   Ativo
                 </label>
               </div>
             </div>
-            <button
-              className="btn btn-primary btn-card-home fs-6"
-              data-bs-dismiss="modal"
-            >
-              Salvar
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-primary btn-card-home fs-6"
-              data-bs-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button type="button" onClick={deletarLayout}><i class="far fa-trash-alt"></i></button>
+            <div className="botoes-modal-layout">
+              <button
+                className="btn btn-primary btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Salvar
+              </button>
+              <button
+                type="button"
+                className="btn btn-outline-primary btn-card-home fs-6"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                className="botao-delete-modal"
+                onClick={deletarLayout}
+                data-bs-dismiss="modal"
+              >
+                <i className="far fa-trash-alt fs-4 text-danger"></i>
+              </button>
+            </div>
           </form>
         </div>
       </div>
-      <Toast className="toast btn-success bg-success" show={showAlterar} delay={5000} autohide>
-        <Toast.Body>{`Layout ${nome} alterado com sucesso!`}</Toast.Body>
-      </Toast>
-      <Toast className="toast btn-success bg-success" show={showDeletar} delay={5000} autohide>
-        <Toast.Body>{`Layout ${nome} excluído com sucesso!`}</Toast.Body>
-      </Toast>
+
     </div>
   );
 }

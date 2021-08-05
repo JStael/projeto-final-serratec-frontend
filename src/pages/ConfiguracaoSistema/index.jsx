@@ -15,15 +15,18 @@ function ConfiguracaoSistema() {
   const { setLayout } = useContext(GlobalContext);
   const history = useHistory();
 
-  const [layouts, setLayouts] = useState([]);
+  //const [layouts, setLayouts] = useState([]);
+  const [layoutsAtivos, setLayoutsAtivos] = useState([]);
 
   useEffect(() => {
     http.get("layouts").then((response) => {
       const { data } = response;
-      setLayouts(data);
+      setLayoutsAtivos(data.filter(layout => layout.ativo));
+      //setLayouts(data);
     });
-  }, []);
 
+  }, []);
+  
   return (
     <>
       <Header />
@@ -84,7 +87,7 @@ function ConfiguracaoSistema() {
                   Alterar layout de recibo
                 </button>
                 <ul className="dropdown-menu lista-recibo">
-                  {layouts.map((layout) => (
+                  {layoutsAtivos.map((layout) => (
                     <li
                       className="layout p-2"
                       key={layout.id}

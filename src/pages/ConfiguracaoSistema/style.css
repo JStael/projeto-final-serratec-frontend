@@ -92,29 +92,3 @@
 .layout:hover {
   background-color: #f1f1f1;
 }
-
-/* .avatari {
-  border-style: dotted;
-}
-
-.Jesus {
-  display: flex;
-  border-radius: 20px;
-  align-self: center;
-  flex-direction: row;
-  margin-left: 50px;
-  justify-content: center;
-}
-
-.to-perdido {
-  width: 200px;
-  height: 200px;
-
-  align-self: flex-end;
-}
-
-.Meachei {
-  align-items: center;
-
-  border-radius: 0%;
-} */
