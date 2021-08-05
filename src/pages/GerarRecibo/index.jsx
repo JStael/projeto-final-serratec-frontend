@@ -8,21 +8,49 @@ import "./style.css";
 function GerarRecibo() {
   const history = useHistory();
 
-  const [paciente, setPaciente] = useState("");
-  const [medico, setMedico] = useState("");
-  const [procedimento, setProcedimento] = useState("");
-  const [layout, setLayout] = useState("");
+  const [layout, setLayout] = useState([]);
+  const [paciente, setPaciente] = useState([]);
+  const [medico, setMedico] = useState([]);
+  const [procedimento, setProcedimento] = useState([]);
 
-  const [layouts, setLayouts] = useState([]);
+  const [layoutsAtivos, setLayoutsAtivos] = useState([]);
+  const [medicos, setMedicos] = useState([]);
+  const [pacientes, setPacientes] = useState([]);
+  const [procedimentos, setProcedimentos] = useState([]);
 
   useEffect(() => {
     http
       .get("layouts")
       .then(response => { 
         const { data } = response;
-        setLayouts(data)
+        setLayoutsAtivos(data.filter(layout => layout.ativo));
       })
       .catch(erro => console.error(erro))
+
+    http
+      .get("pacientes")
+      .then(response => {
+        const { data } = response;
+        setPacientes(data)
+      })
+      .catch(erro => console.error(erro))
+
+    http
+      .get("medicos")
+      .then(response => {
+        const { data } = response;
+        setMedicos(data);
+      }) 
+      .catch(erro => console.error(erro)) 
+
+    http
+      .get("procedimentos")
+      .then(response => {
+        const { data } = response;
+        setProcedimentos(data)
+      })
+      .catch(erro => console.error(erro))
+
     }, []);
 
   const gerarRecibo = () => {};
@@ -41,7 +69,7 @@ function GerarRecibo() {
               <div>
                 <label className="mb-2">Layout do recibo</label>
                  <select className="form-select">
-                  {layouts.map((layout) => (
+                  {layoutsAtivos.map((layout) => (
                     <option value={layout.nome} key={layout.id}>{layout.nome}</option>
                   ))} 
                 </select>  

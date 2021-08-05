@@ -1,7 +1,12 @@
+import { useContext } from "react";
 import { useState } from "react";
+import { GlobalContext } from "../../providers/GlobalContext";
 import http from "../../services/http";
 
 function ModalCriarLayout() {
+
+  const { setGerenciador } = useContext(GlobalContext);
+
   const [nome, setNome] = useState("");
   const [dataEmissao, setDataEmissao] = useState(false);
   const [coladorador, setColadorador] = useState(false);
@@ -17,7 +22,7 @@ function ModalCriarLayout() {
       formaPagamento: formaPagamento,
     };
 
-    http.post("layouts", layout).then((response) => console.log(response.data));
+    http.post("layouts", layout).then((response) => setGerenciador(response));
   };
 
   return (
@@ -69,7 +74,9 @@ function ModalCriarLayout() {
                   type="checkbox"
                   id="formaPagamento"
                   value={formaPagamento}
-                  onChange={(evento) => setFormaPagamento(evento.target.checked)}
+                  onChange={(evento) =>
+                    setFormaPagamento(evento.target.checked)
+                  }
                 />
                 <label className="form-check-label" htmlFor="formaPagamento">
                   Forma de pagamento
