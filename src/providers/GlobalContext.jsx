@@ -14,6 +14,8 @@ export const GlobalProvider = ({ children }) => {
   const [autenticado, setAutenticado] = useState(false);
   const [usuario, setUsuario] = useState("")
 
+  const [gerenciador, setGerenciador] = useState("");
+
   useEffect(() => {
     setAutenticado(localStorage.getItem("token"));
     setUsuario(localStorage.getItem("userName"));
@@ -44,7 +46,9 @@ export const GlobalProvider = ({ children }) => {
         usuario,
         logout,
         layout,
-        setLayout
+        setLayout,
+        gerenciador,
+        setGerenciador
       }}
     >
       {children}

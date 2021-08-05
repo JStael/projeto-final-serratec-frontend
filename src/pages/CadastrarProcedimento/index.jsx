@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import http from "../../services/http";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
-import { Toast } from "react-bootstrap";
 
 import "./style.css";
 
@@ -13,8 +12,6 @@ function CadastroProcedimento() {
   const [honorario, setHonorario] = useState("");
 
   const history = useHistory();
-
-  const [show, setShow] = useState(false);
 
   const efetuarCadastro = (evento) => {
     evento.preventDefault();
@@ -26,7 +23,7 @@ function CadastroProcedimento() {
     http
       .post("procedimentos", procedimento)
       .then((response) => {
-        mostrarToast();
+        alert(`Procedimento ${tipoProcedimento} cadastrado com sucesso!`);
         setProcedimento("");
         setDescricaoProcedimento("");
         setHonorario("");
@@ -36,10 +33,6 @@ function CadastroProcedimento() {
         console.log(erro);
       });
   };
-
-  const mostrarToast = () => {
-    setShow(true);
-  }
 
   return (
     <>
@@ -99,9 +92,6 @@ function CadastroProcedimento() {
           </div>
         </form>
       </div>
-      <Toast className="toast btn-success bg-success" onClose={() => setShow(false)} show={show} delay={5000} autohide>
-        <Toast.Body>{`Procedimento ${tipoProcedimento} cadastrado com sucesso!`}</Toast.Body>
-      </Toast>
     </>
   );
 }

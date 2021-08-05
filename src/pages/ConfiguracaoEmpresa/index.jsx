@@ -4,13 +4,10 @@ import "./style.css";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
 import http from "../../services/http";
-import { Toast } from "react-bootstrap"; 
 
 function ConfiguracaoEmpresa() {
   const history = useHistory();
   const [readOnly, setReadOnly] = useState(true);
-
-  const [show, setShow] = useState(false);
 
   const [id, setId] = useState("");
   const [nomeFantasia, setNomeFantasia] = useState("");
@@ -68,16 +65,12 @@ function ConfiguracaoEmpresa() {
     http
       .put(`empresa/${id}`, empresa)
       .then((response) => {
-        mostrarToast();
+        alert(`Cadastro da empresa alterado com sucesso!`);
       })
       .catch((erro) => {
         console.log(erro);
       });
   };
-
-  const mostrarToast = () => {
-    setShow(true);
-  }
 
   return (
     <>
@@ -222,9 +215,6 @@ function ConfiguracaoEmpresa() {
           </div>
         </form>
       </div>
-      <Toast className="toast btn-success bg-success" show={show} delay={5000} autohide>
-        <Toast.Body>{`Cadastro da empresa alterado com sucesso!`}</Toast.Body>
-      </Toast>
     </>
   );
 }

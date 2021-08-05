@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
@@ -12,21 +11,19 @@ import "./style.css";
 
 function ConfiguracaoSistema() {
 
-  const { setLayout } = useContext(GlobalContext);
+  const { setLayout, gerenciador } = useContext(GlobalContext);
   const history = useHistory();
 
-  //const [layouts, setLayouts] = useState([]);
   const [layoutsAtivos, setLayoutsAtivos] = useState([]);
 
   useEffect(() => {
     http.get("layouts").then((response) => {
       const { data } = response;
       setLayoutsAtivos(data.filter(layout => layout.ativo));
-      //setLayouts(data);
     });
 
-  }, []);
-  
+  }, [gerenciador]);
+
   return (
     <>
       <Header />

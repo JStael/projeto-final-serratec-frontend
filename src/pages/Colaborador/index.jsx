@@ -5,7 +5,6 @@ import http from "../../services/http";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
-import { Toast } from "react-bootstrap";
 import "./style.css";
 
 function Colaborador() {
@@ -13,9 +12,6 @@ function Colaborador() {
   const { colaborador } = context;
   const { endereco } = context.colaborador;
   const history = useHistory();
-
-  const [showAlterar, setShowAlterar] = useState(false);
-  const [showDeletar, setShowDeletar] = useState(false);
 
   const [readOnly, setReadOnly] = useState(true);
 
@@ -85,7 +81,7 @@ function Colaborador() {
     http
       .put(`secretarias/${id}`, colaborador)
       .then((response) => {
-        mostrarToastAlterar();
+        alert(`Cadastro do colaborador ${nome} alterado com sucesso!`);
         console.log(response);
         setNome("");
         setEmail("");
@@ -110,19 +106,11 @@ function Colaborador() {
     http
       .delete(`usuarios/${id}`)
       .then((response) => {
-        mostrarToastDeletar();
+        alert(`Cadastro do colaborador ${nome} excluído com sucesso!`);
         history.goBack();
       })
       .catch((erro) => console.error(erro));
   };
-
-  const mostrarToastAlterar = () => {
-    setShowAlterar(true);
-  }
-
-  const mostrarToastDeletar = () => {
-    setShowDeletar(true);
-  }
 
   return (
     <>
@@ -345,12 +333,6 @@ function Colaborador() {
           </div>
         </div>
       </div>
-      <Toast className="toast btn-success bg-success" show={showAlterar} delay={5000} autohide>
-        <Toast.Body>{`Cadastro do colaborador ${nome} alterado com sucesso!`}</Toast.Body>
-      </Toast>
-      <Toast className="toast btn-success bg-success" show={showDeletar} delay={5000} autohide>
-        <Toast.Body>{`Cadastro do colaborador ${nome} excluído com sucesso!`}</Toast.Body>
-      </Toast>
     </>
   );
 }

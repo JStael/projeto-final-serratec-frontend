@@ -4,7 +4,7 @@ import http from "../../services/http";
 import "./style.css";
 
 function ModalEditarLayout() {
-  const { layout } = useContext(GlobalContext);
+  const { layout, setGerenciador } = useContext(GlobalContext);
   const [checkedDataEmissao, setCheckedDataEmissao] = useState(false);
   const [checkedColab, setCheckedColab] = useState(false);
   const [checkedFormaPagamento, setCheckedFormaPagamento] = useState(false);
@@ -44,8 +44,8 @@ function ModalEditarLayout() {
     http
       .put(`layouts/${id}`, layoutEditado)
       .then((response) => { 
-        alert(`Layout ${nome} alterado com sucesso!`)
-        console.log(response);
+        alert(`Layout ${nome} alterado com sucesso!`);
+        setGerenciador(response)
       })
       .catch((erro) => console.error(erro));
   };
@@ -54,7 +54,8 @@ function ModalEditarLayout() {
     http
       .delete(`layouts/${id}`)
       .then((response) => {
-        alert(`Layout ${nome} excluído com sucesso!`)
+        alert(`Layout ${nome} excluído com sucesso!`);
+        setGerenciador(response);
       })
       .catch((erro) => console.error(erro));
   };

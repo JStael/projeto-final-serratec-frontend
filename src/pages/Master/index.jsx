@@ -5,7 +5,6 @@ import http from "../../services/http";
 import { GlobalContext } from "../../providers/GlobalContext";
 import Header from "../../components/Header";
 import MenuLateral from "../../components/MenuLateral";
-import { Toast } from "react-bootstrap";
 import "./style.css";
 
 function Master() {
@@ -15,9 +14,6 @@ function Master() {
   const { master } = context;
 
   const [readOnly, setReadOnly] = useState(true);
-
-  const [showAlterar, setShowAlterar] = useState(false);
-  const [showDeletar, setShowDeletar] = useState(false);
 
   const id = master.id;
   const [nome, setNome] = useState(master.nome);
@@ -82,7 +78,7 @@ function Master() {
     http
       .put(`usuarios/${id}`, master)
       .then((response) => {
-        mostrarToastAlterar();
+        alert(`Cadastro do usuário ${nome} alterado com sucesso!`);
       })
       .catch((erro) => {
         console.log("Hmmm.. Tem algo errado");
@@ -94,19 +90,11 @@ function Master() {
     http
       .delete(`usuarios/${id}`)
       .then((response) => {
-        mostrarToastDeletar();
+        alert(`Usuário master ${nome} excluído com sucesso!`);
         history.goBack();
       })
       .catch((erro) => console.error(erro));
   };
-
-  const mostrarToastAlterar = () => {
-    setShowAlterar(true);
-  }
-
-  const mostrarToastDeletar = () => {
-    setShowDeletar(true);
-  }
 
   return (
     <>
@@ -317,12 +305,6 @@ function Master() {
           </div>
         </div>
       </div>
-      <Toast className="toast btn-success bg-success" show={showAlterar} delay={5000} autohide>
-        <Toast.Body>{`Cadastro do usuário ${nome} alterado com sucesso!`}</Toast.Body>
-      </Toast>
-      <Toast className="toast btn-success bg-success" show={showDeletar} delay={5000} autohide>
-        <Toast.Body>{`Usuário master ${nome} excluído com sucesso!`}</Toast.Body>
-      </Toast>
     </>
   );
 }
